@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>$CRACK | GET HIGH ON GAINS</title>
+    <title>$CRACK | THE ULTIMATE DEGEN HIGH</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;700;900&display=swap" rel="stylesheet">
     <script>
@@ -15,41 +15,49 @@
                         sans: ['Space Grotesk', 'sans-serif'],
                     },
                     colors: {
-                        bsc: '#F0B90B',
+                        degenGreen: '#39FF14', // Neon chart green from the images
+                        degenDark: '#0A0F11',  // Deep moody background
+                        rockWhite: '#F3F4F6'
                     }
                 }
             }
         }
     </script>
     <style>
-        /* Brutalist design elements */
         body { 
-            background-color: #FFFFFF; 
-            color: #000000;
+            background-color: #0A0F11; /* Changed to dark theme to match images */
+            color: #FFFFFF;
             overflow-x: hidden;
         }
         .brutal-border {
-            border: 4px solid #000;
-            box-shadow: 8px 8px 0px #000;
+            border: 4px solid #39FF14;
+            box-shadow: 8px 8px 0px #39FF14;
             transition: all 0.1s ease;
+            background-color: #000;
         }
         .brutal-border:active {
             transform: translate(4px, 4px);
-            box-shadow: 4px 4px 0px #000;
+            box-shadow: 4px 4px 0px #39FF14;
+        }
+        .brutal-border-white {
+            border: 4px solid #FFF;
+            box-shadow: 8px 8px 0px #FFF;
+            background-color: #000;
         }
         .marquee {
             white-space: nowrap;
             overflow: hidden;
             box-sizing: border-box;
-            background: #F0B90B;
+            background: #39FF14;
             border-top: 4px solid #000;
             border-bottom: 4px solid #000;
             padding: 10px 0;
+            color: #000;
         }
         .marquee span {
             display: inline-block;
             padding-left: 100%;
-            animation: marquee 15s linear infinite;
+            animation: marquee 12s linear infinite; /* Sped up for anxiety */
             font-size: 2rem;
             font-family: 'Archivo Black', sans-serif;
             text-transform: uppercase;
@@ -59,312 +67,293 @@
             100% { transform: translate(-100%, 0); }
         }
         .shake:hover {
-            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+            animation: shake 0.3s cubic-bezier(.36,.07,.19,.97) both infinite;
             transform: translate3d(0, 0, 0);
         }
         @keyframes shake {
-            10%, 90% { transform: translate3d(-1px, 0, 0); }
-            20%, 80% { transform: translate3d(2px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-            40%, 60% { transform: translate3d(4px, 0, 0); }
+            10%, 90% { transform: translate3d(-2px, 0, 0); }
+            20%, 80% { transform: translate3d(4px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-8px, 0, 0); }
+            40%, 60% { transform: translate3d(8px, 0, 0); }
         }
-        /* Rotated sections for chaos */
-        .tilt-right { transform: rotate(1deg); }
-        .tilt-left { transform: rotate(-1deg); }
+        .tilt-right { transform: rotate(1.5deg); }
+        .tilt-left { transform: rotate(-1.5deg); }
+        .text-stroke {
+            -webkit-text-stroke: 2px #39FF14;
+            color: transparent;
+        }
     </style>
 </head>
-<body class="font-sans antialiased selection:bg-black selection:text-bsc">
+<body class="font-sans antialiased selection:bg-degenGreen selection:text-black">
 
     <div class="marquee">
-        <span>$CRACK IS LIVE ON BSC 🚀 ZERO TAX 🚀 PURE ADRENALINE 🚀 CHASING THE GREEN CANDLE 🚀 DON'T SLEEP 🚀 BUY NOW 🚀 </span>
+        <span>$CRACK IS LIVE 🚀 WE APE AT DAWN 🚀 CHASING THE GOD CANDLE 🚀 NGMI JEETS 🚀 1000X OR ZERO 🚀 DIAMOND HANDS ONLY 🚀 WAGMI 🚀 BUY THE DIP 🚀</span>
     </div>
 
-    <nav class="p-6 border-b-4 border-black flex flex-col sm:flex-row justify-between items-center bg-white relative z-10 gap-4">
-        <div class="text-5xl font-heavy tracking-tighter">$CRACK</div>
-        <div class="flex gap-4">
-            <a href="#about" class="font-bold text-xl hover:bg-bsc px-2 py-1 border-2 border-transparent hover:border-black transition-all">THE HIGH</a>
-            <a href="#tokenomics" class="font-bold text-xl hover:bg-bsc px-2 py-1 border-2 border-transparent hover:border-black transition-all">THE STASH</a>
-            <a href="#roadmap" class="font-bold text-xl hover:bg-bsc px-2 py-1 border-2 border-transparent hover:border-black transition-all">REHAB</a>
+    <nav class="p-4 sm:p-6 border-b-4 border-degenGreen flex flex-col md:flex-row justify-between items-center bg-black relative z-10 gap-4">
+        <div class="text-4xl sm:text-5xl font-heavy tracking-tighter text-degenGreen">$CRACK</div>
+        <div class="flex flex-wrap justify-center gap-2 sm:gap-6">
+            <a href="#about" class="font-bold text-lg sm:text-xl text-white hover:text-degenGreen transition-colors">THE HIGH</a>
+            <a href="#tokenomics" class="font-bold text-lg sm:text-xl text-white hover:text-degenGreen transition-colors">THE BAG</a>
+            <a href="#how-to-buy" class="font-bold text-lg sm:text-xl text-white hover:text-degenGreen transition-colors">HOW TO FIX</a>
         </div>
-        <button class="bg-bsc brutal-border font-heavy text-2xl px-6 py-2 shake">BUY NOW</button>
+        <button class="bg-degenGreen text-black brutal-border border-degenGreen font-heavy text-xl sm:text-2xl px-6 py-2 shake shadow-none">APE IN NOW</button>
     </nav>
 
     <main>
-        <section class="py-20 px-4 text-center bg-white relative overflow-hidden">
-            <!-- Background chaos text -->
-            <div class="absolute inset-0 opacity-5 pointer-events-none text-[15rem] font-heavy leading-none text-black flex flex-col justify-center overflow-hidden whitespace-nowrap">
-                <div>CHASE THE CANDLE</div>
-                <div class="text-right">WEN LAMBO</div>
+        <section class="py-12 sm:py-20 px-4 text-center relative overflow-hidden bg-[radial-gradient(#1f2937_2px,transparent_2px)] [background-size:32px_32px]">
+            <div class="absolute inset-0 opacity-10 pointer-events-none text-[8rem] sm:text-[15rem] font-heavy leading-none text-degenGreen flex flex-col justify-center overflow-hidden whitespace-nowrap z-0">
+                <div>GREEN DILDO</div>
+                <div class="text-right">SEND IT HIGHER</div>
             </div>
 
             <div class="relative z-10 max-w-5xl mx-auto flex flex-col items-center">
-                <div class="bg-black text-white font-bold text-xl px-4 py-1 uppercase mb-8 transform -rotate-2 inline-block brutal-border border-white shadow-none">
-                    Deployed on Binance Smart Chain
+                <div class="bg-degenGreen text-black font-bold text-lg sm:text-xl px-4 py-1 uppercase mb-8 transform -rotate-3 inline-block brutal-border border-black shadow-none">
+                    WARNING: HIGHLY ADDICTIVE
                 </div>
                 
-                <h1 class="text-7xl md:text-[8rem] font-heavy leading-[0.9] uppercase mb-8 text-center">
+                <h1 class="text-5xl sm:text-7xl md:text-[8rem] font-heavy leading-[0.9] uppercase mb-8 text-center text-white drop-shadow-[0_0_15px_rgba(57,255,20,0.5)]">
                     The Ultimate <br>
-                    <span class="text-white text-stroke" style="-webkit-text-stroke: 3px black; text-shadow: 6px 6px 0px #F0B90B;">HIGH.</span><br>
-                    <span class="text-4xl md:text-6xl block mt-4 tracking-tight">Zero Comedown.</span>
+                    <span class="text-degenGreen block mt-2">HIGH.</span>
                 </h1>
                 
-                <p class="text-2xl md:text-3xl font-bold max-w-3xl border-4 border-black p-6 bg-white brutal-border tilt-right mb-12">
-                    You know the feeling. It's 4 AM, your eyes are bloodshot, and you're chasing that next 15-minute green candle.
-                    <span class="text-bsc font-heavy bg-black px-2 block mt-2">WE BOTTLED THAT PURE, UNCUT DEGEN ENERGY.</span>
+                <p class="text-xl sm:text-2xl md:text-3xl font-bold max-w-3xl border-4 border-degenGreen p-6 bg-black text-white brutal-border tilt-right mb-12">
+                    It's 4 AM. Your eyes are bleeding. You haven't blinked since the last 15-minute candle closed. 
+                    <span class="text-degenGreen font-heavy block mt-4">WE BOTTLED THAT PURE DEGEN FOMO.</span>
                 </p>
 
-                <div class="flex flex-col sm:flex-row gap-8 w-full max-w-2xl justify-center">
-                    <button class="flex-1 bg-black text-white brutal-border border-black font-heavy text-3xl py-6 hover:bg-gray-800 shake">
+                <div class="flex flex-col sm:flex-row gap-6 w-full max-w-2xl justify-center px-4">
+                    <button class="flex-1 bg-degenGreen text-black brutal-border border-degenGreen font-heavy text-2xl sm:text-3xl py-4 sm:py-6 shake shadow-none">
                         BUY $CRACK
                     </button>
-                    <button class="flex-1 bg-white text-black brutal-border font-heavy text-3xl py-6 hover:bg-gray-100 tilt-left">
-                        VIEW CHART
+                    <button class="flex-1 bg-black text-white brutal-border-white font-heavy text-2xl sm:text-3xl py-4 sm:py-6 hover:bg-gray-900 tilt-left">
+                        DEXSCREENER
                     </button>
                 </div>
 
-                <!-- IMAGE 1 PLACEHOLDER -->
-                <div class="w-full max-w-4xl mt-16 bg-gray-200 border-4 border-black brutal-border relative min-h-[300px] sm:min-h-[500px] flex items-center justify-center p-6 tilt-right z-10 group overflow-hidden">
-                    <div class="absolute inset-4 border-4 border-dashed border-gray-400 flex flex-col items-center justify-center p-6 text-center group-hover:border-black transition-colors bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjZmZmIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDBMOCA4Wk04IDBMMCA4WiIgc3Ryb2tlPSIjZTllOWU5IiBzdHJva2Utd2lkdGg9IjEiPjwvcGF0aD4KPC9zdmc+')]">
-                        <span class="font-heavy text-3xl md:text-5xl text-gray-500 uppercase tracking-tighter mix-blend-multiply group-hover:text-black transition-colors">IMAGE 1: The Rush</span>
-                        <span class="font-bold text-lg md:text-xl text-gray-500 mt-4 max-w-lg">(Suggested: A bloodshot-eyed degen staring at a massive green candlestick erupting through a ceiling)</span>
-                    </div>
+                <div class="w-full max-w-4xl mt-16 border-4 border-degenGreen brutal-border relative min-h-[300px] sm:min-h-[500px] flex items-center justify-center tilt-right z-10 overflow-hidden bg-black p-0">
+                    <img src="https://andrewseanholness.github.io/crack/crackrock.jpg" alt="The Rush" class="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-500">
                 </div>
             </div>
         </section>
 
-        <div class="marquee bg-black text-white border-none" style="background: black;">
-            <span style="color: white; font-family: 'Space Grotesk', sans-serif;">CA: 0XCRACK...042069 • LP LOCKED • CONTRACT RENOUNCED • NO RUGS, JUST DRUGS (METAPHORICALLY) • </span>
+        <div class="marquee" style="background: #000; color: #39FF14; border-color: #39FF14;">
+            <span style="font-family: 'Space Grotesk', sans-serif;">CA: 0XCRACK...042069 • LP BURNED TO ASHES • RUGS ARE FOR FIAT CUCKS • BUY THE DIP • DEVS ARE TWEAKING • </span>
         </div>
 
-        <!-- NEW LORE SECTION -->
-        <section id="lore" class="py-24 px-4 bg-gray-100 border-b-4 border-black relative overflow-hidden">
+        <section id="lore" class="py-16 sm:py-24 px-4 bg-degenDark border-b-4 border-degenGreen relative overflow-hidden">
             <div class="max-w-6xl mx-auto flex flex-col lg:flex-row gap-12 items-center">
-                <!-- IMAGE 2 PLACEHOLDER -->
-                <div class="w-full lg:w-1/2 bg-white border-4 border-black brutal-border relative min-h-[400px] flex items-center justify-center p-4 tilt-left group">
-                    <div class="absolute inset-4 border-4 border-dashed border-gray-400 flex flex-col items-center justify-center p-6 text-center group-hover:border-bsc transition-colors">
-                        <span class="font-heavy text-3xl md:text-4xl text-gray-400 uppercase tracking-tighter group-hover:text-black transition-colors">IMAGE 2: The Origin</span>
-                        <span class="font-bold text-lg text-gray-400 mt-4">(Suggested: Three exhausted devs in a basement bathed in the green glow of monitors)</span>
-                    </div>
+                <div class="w-full lg:w-1/2 border-4 border-degenGreen brutal-border relative min-h-[300px] sm:min-h-[500px] flex items-center justify-center tilt-left overflow-hidden p-0 bg-black">
+                    <!-- Updated to use the text image here as requested previously -->
+                    <img src="https://andrewseanholness.github.io/crack/cracklogocoin.jfif" alt="The Origin" class="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-500">
                 </div>
 
                 <div class="w-full lg:w-1/2">
-                    <div class="bg-black text-bsc font-bold text-lg px-4 py-1 uppercase mb-4 inline-block brutal-border">
-                        The Genesis Block
+                    <div class="bg-degenGreen text-black font-bold text-lg px-4 py-1 uppercase mb-4 inline-block brutal-border border-black shadow-none">
+                        The Patient Zero
                     </div>
-                    <h2 class="text-5xl md:text-7xl font-heavy uppercase mb-8 leading-none">The Story of <br>The Purest Code</h2>
-                    <p class="text-xl md:text-2xl font-bold mb-6 text-gray-800 leading-relaxed border-l-8 border-bsc pl-6">
-                        It started in a basement in 2021. Three developers, 84 hours without sleep, fueled by nothing but instant noodles and the adrenaline of a 1000x pump.
-                    </p>
-                    <p class="text-xl md:text-2xl font-bold text-gray-800 leading-relaxed">
-                        They were trying to build a stablecoin. They failed. Instead, they accidentally distilled the unadulterated essence of market FOMO into a single smart contract. They stared at the code. Their pupils dilated. 
-                        <span class="bg-bsc text-black px-2 mx-1 uppercase font-black tracking-tighter">"$CRACK,"</span> one whispered. The rest is history.
-                    </p>
+                    <h2 class="text-4xl sm:text-5xl md:text-7xl font-heavy uppercase mb-8 leading-none text-white drop-shadow-[2px_2px_0_#39FF14]">The Dev<br>Snapped</h2>
+                    <div class="border-l-8 border-degenGreen pl-6 space-y-6">
+                        <p class="text-lg sm:text-xl md:text-2xl font-bold text-gray-300 leading-relaxed break-words">
+                            He stared at the 1-second chart until the red and green bars burned into his retinas. He lost the kids' college fund shorting a frog coin. Running on 3 hours of sleep in 4 days and pure spite, his brain broke.
+                        </p>
+                        <p class="text-lg sm:text-xl md:text-2xl font-bold text-gray-300 leading-relaxed break-words">
+                            He didn't want utility. He wanted the purest, most uncut spike of dopamine on the Binance Smart Chain. He mashed the keyboard, deployed 
+                            <span class="text-degenGreen font-black tracking-tighter mx-1">$CRACK</span>, 
+                            threw the keys in the incinerator, and passed out. Now, the degens run the asylum.
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="about" class="py-24 px-4 bg-white border-b-4 border-black relative overflow-hidden">
-            <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <div class="tilt-left bg-bsc border-4 border-black p-8 brutal-border">
-                    <h2 class="text-6xl md:text-7xl font-heavy uppercase mb-6">Why $CRACK?</h2>
-                    <p class="text-2xl font-bold mb-6">
-                        Because sleep is a construct and the 1-minute chart is reality. Investors want safety, but degens want the rush.
+        <section id="about" class="py-16 sm:py-24 px-4 bg-black border-b-4 border-degenGreen relative overflow-hidden">
+            <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 items-center">
+                <div class="tilt-left bg-degenDark border-4 border-degenGreen p-6 sm:p-8 brutal-border">
+                    <h2 class="text-4xl sm:text-6xl md:text-7xl font-heavy uppercase mb-6 break-words text-white">Why Ape $CRACK?</h2>
+                    <p class="text-xl sm:text-2xl font-bold mb-6 break-words text-gray-300">
+                        Because reading whitepapers is for boomers in suits. You don't want a "revolutionary ecosystem," you want a heart attack when that giant green god candle prints.
                     </p>
-                    <p class="text-2xl font-bold bg-white p-4 border-2 border-black">
-                        We provide an exceptionally engineered, totally transparent contract that lets you safely chase the ultimate high. It's pure. It's fast (thanks to BSC). And it's designed to make your heart race when that big green candle prints.
+                    <p class="text-xl sm:text-2xl font-bold bg-black p-4 border-2 border-degenGreen break-words text-degenGreen">
+                        It's pure. It's unruggable. Stop paper-handing your bags for a 10% gain and hold the line until we're all driving neon lambos on the moon.
                     </p>
                 </div>
                 <div class="flex justify-center tilt-right">
-                    <div class="text-[10rem] sm:text-[12rem] font-heavy leading-none text-transparent text-stroke transform -rotate-12 select-none" style="-webkit-text-stroke: 4px black; text-shadow: 10px 10px 0px #F0B90B;">
-                        PURE
+                    <div class="text-[6rem] sm:text-[10rem] md:text-[12rem] font-heavy leading-none text-stroke transform -rotate-12 select-none break-words drop-shadow-[0_0_20px_rgba(57,255,20,0.3)]">
+                        SEND IT
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="tokenomics" class="py-24 px-4 bg-bsc border-b-4 border-black">
+        <section id="tokenomics" class="py-16 sm:py-24 px-4 bg-degenDark border-b-4 border-degenGreen">
             <div class="max-w-6xl mx-auto">
-                <h2 class="text-6xl md:text-8xl font-heavy uppercase mb-4 text-center transform -rotate-1">The Stash</h2>
-                <p class="text-2xl md:text-3xl font-bold text-center mb-16 uppercase bg-black text-white inline-block px-4 py-2 transform rotate-1 mx-auto table">100% pure. Uncut. 0% Tax.</p>
+                <h2 class="text-5xl sm:text-6xl md:text-8xl font-heavy uppercase mb-4 text-center text-white transform -rotate-1 break-words">The Bag</h2>
+                <p class="text-xl sm:text-2xl font-bold text-center mb-12 sm:mb-16 uppercase bg-degenGreen text-black inline-block px-4 py-2 transform rotate-1 mx-auto table break-words brutal-border border-black shadow-none">100% pure. Uncut. 0% Tax.</p>
                 
                 <div class="flex flex-col gap-8 max-w-5xl mx-auto">
-                    <!-- Block 1 -->
-                    <div class="bg-white brutal-border border-black flex flex-col md:flex-row overflow-hidden">
-                        <div class="bg-black text-white font-heavy text-6xl md:text-8xl p-6 md:p-12 flex items-center justify-center md:w-48 shrink-0">
+                    <!-- Stat 1 -->
+                    <div class="bg-black brutal-border-white flex flex-col sm:flex-row overflow-hidden w-full">
+                        <div class="bg-white text-black border-b-4 sm:border-b-0 sm:border-r-4 border-white font-heavy text-5xl sm:text-7xl p-6 sm:p-10 flex items-center justify-center sm:w-32 md:w-48 shrink-0">
                             1
                         </div>
-                        <div class="p-8 md:p-12 flex-1">
-                            <h3 class="text-4xl md:text-5xl font-heavy mb-4 uppercase">Total Supply</h3>
-                            <p class="text-xl md:text-2xl font-bold text-gray-700">1,000,000,000 $CRACK. Precisely measured out for the market's enjoyment. No minting, no BS.</p>
+                        <div class="p-6 sm:p-10 flex-1 min-w-0">
+                            <h3 class="text-3xl sm:text-4xl md:text-5xl font-heavy mb-4 uppercase break-words text-degenGreen">Total Supply</h3>
+                            <p class="text-lg sm:text-xl md:text-2xl font-bold text-gray-300 break-words">1,000,000,000 $CRACK. Pre-packaged for your tweaking pleasure. Team will HODL just $50 worth of tokens at the start.</p>
                         </div>
                     </div>
 
-                    <!-- Block 2 -->
-                    <div class="bg-white brutal-border border-black flex flex-col md:flex-row-reverse overflow-hidden tilt-right">
-                        <div class="bg-black text-white font-heavy text-6xl md:text-8xl p-6 md:p-12 flex items-center justify-center md:w-48 shrink-0">
+                    <!-- Stat 2 -->
+                    <div class="bg-black brutal-border border-degenGreen flex flex-col sm:flex-row-reverse overflow-hidden tilt-right w-full">
+                        <div class="bg-degenGreen text-black border-b-4 sm:border-b-0 sm:border-l-4 border-degenGreen font-heavy text-5xl sm:text-7xl p-6 sm:p-10 flex items-center justify-center sm:w-32 md:w-48 shrink-0">
                             2
                         </div>
-                        <div class="p-8 md:p-12 flex-1">
-                            <h3 class="text-4xl md:text-5xl font-heavy mb-4 uppercase">0% Taxes</h3>
-                            <p class="text-xl md:text-2xl font-bold text-gray-700">No buy tax. No sell tax. We don't step on our product. What you buy is what you get.</p>
+                        <div class="p-6 sm:p-10 flex-1 min-w-0">
+                            <h3 class="text-3xl sm:text-4xl md:text-5xl font-heavy mb-4 uppercase break-words text-white">0% Jeet Tax</h3>
+                            <p class="text-lg sm:text-xl md:text-2xl font-bold text-gray-300 break-words">No buy tax. No sell tax. We don't step on the product. We don't punish the high. Max bid without the slippage crying.</p>
                         </div>
                     </div>
 
-                    <!-- Block 3 -->
-                    <div class="bg-white brutal-border border-black flex flex-col md:flex-row overflow-hidden tilt-left">
-                        <div class="bg-black text-white font-heavy text-6xl md:text-8xl p-6 md:p-12 flex items-center justify-center md:w-48 shrink-0">
+                    <!-- Stat 3 -->
+                    <div class="bg-black brutal-border-white flex flex-col sm:flex-row overflow-hidden tilt-left w-full">
+                        <div class="bg-white text-black border-b-4 sm:border-b-0 sm:border-r-4 border-white font-heavy text-5xl sm:text-7xl p-6 sm:p-10 flex items-center justify-center sm:w-32 md:w-48 shrink-0">
                             3
                         </div>
-                        <div class="p-8 md:p-12 flex-1 min-w-0">
-                            <h3 class="text-4xl md:text-5xl font-heavy mb-4 uppercase break-words">LP Burned</h3>
-                            <p class="text-xl md:text-2xl font-bold text-gray-700 break-words">Liquidity pool tokens sent to the void. Rug-proof structure for peace of mind while tweaking on charts.</p>
+                        <div class="p-6 sm:p-10 flex-1 min-w-0">
+                            <h3 class="text-3xl sm:text-4xl md:text-5xl font-heavy mb-4 uppercase break-words text-degenGreen">LP Burned</h3>
+                            <p class="text-lg sm:text-xl md:text-2xl font-bold text-gray-300 break-words">Liquidity pool burned to absolute ashes. Contract renounced. Completely rug-proof so you can stare at the 1-minute chart in peace.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- NEW HOW TO BUY SECTION -->
-        <section id="how-to-buy" class="py-24 px-4 bg-white border-b-4 border-black bg-[radial-gradient(#e5e7eb_2px,transparent_2px)] [background-size:24px_24px]">
+        <section id="how-to-buy" class="py-16 sm:py-24 px-4 bg-black border-b-4 border-degenGreen bg-[radial-gradient(#39FF14_1px,transparent_1px)] [background-size:40px_40px]">
             <div class="max-w-6xl mx-auto">
-                <div class="text-center mb-16">
-                    <h2 class="text-6xl md:text-8xl font-heavy uppercase text-black drop-shadow-[4px_4px_0_#F0B90B] mb-4">How To Score</h2>
-                    <p class="text-2xl font-bold uppercase bg-black text-white inline-block px-6 py-2 tilt-right">Your 4-step program to financial euphoria</p>
+                <div class="text-center mb-12 sm:mb-16">
+                    <h2 class="text-5xl sm:text-6xl md:text-8xl font-heavy uppercase text-white drop-shadow-[4px_4px_0_#39FF14] mb-4 break-words">How To Score</h2>
+                    <p class="text-xl sm:text-2xl font-bold uppercase bg-white text-black inline-block px-6 py-2 tilt-right break-words brutal-border border-black shadow-none">4 steps to complete degeneracy</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
                     <div class="flex flex-col gap-6">
-                        <!-- Step 1 -->
-                        <div class="bg-white border-4 border-black p-6 brutal-border flex gap-6 items-start hover:bg-gray-50 transition-colors">
-                            <div class="bg-bsc border-2 border-black font-heavy text-4xl w-16 h-16 flex items-center justify-center shrink-0 tilt-left">1</div>
-                            <div>
-                                <h3 class="text-2xl font-heavy uppercase mb-2">Get a Wallet</h3>
-                                <p class="font-bold text-gray-600">Download MetaMask or Trust Wallet. Keep your seed phrase safe like it's your last rock.</p>
+                        <div class="bg-black border-4 border-degenGreen p-4 sm:p-6 brutal-border flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
+                            <div class="bg-degenGreen text-black font-heavy text-3xl sm:text-4xl w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center shrink-0 tilt-left">1</div>
+                            <div class="min-w-0">
+                                <h3 class="text-xl sm:text-2xl font-heavy uppercase mb-2 break-words text-white">Get a Wallet</h3>
+                                <p class="font-bold text-gray-400 break-words text-sm sm:text-base">Download Trust Wallet or MetaMask. Guard your seed phrase like it's your last rock.</p>
                             </div>
                         </div>
-                        <!-- Step 2 -->
-                        <div class="bg-white border-4 border-black p-6 brutal-border flex gap-6 items-start hover:bg-gray-50 transition-colors ml-0 sm:ml-8">
-                            <div class="bg-bsc border-2 border-black font-heavy text-4xl w-16 h-16 flex items-center justify-center shrink-0 tilt-right">2</div>
-                            <div>
-                                <h3 class="text-2xl font-heavy uppercase mb-2">Acquire BNB</h3>
-                                <p class="font-bold text-gray-600">Buy some BNB on an exchange (Binance, Coinbase, etc.) and send it to your new wallet address.</p>
+                        <div class="bg-black border-4 border-white p-4 sm:p-6 brutal-border-white flex flex-col sm:flex-row gap-4 sm:gap-6 items-start lg:ml-8">
+                            <div class="bg-white text-black font-heavy text-3xl sm:text-4xl w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center shrink-0 tilt-right">2</div>
+                            <div class="min-w-0">
+                                <h3 class="text-xl sm:text-2xl font-heavy uppercase mb-2 break-words text-degenGreen">Acquire BNB</h3>
+                                <p class="font-bold text-gray-400 break-words text-sm sm:text-base">Max bid. Sell your TV if you have to (NFA). Buy BNB and send it to your wallet.</p>
                             </div>
                         </div>
-                        <!-- Step 3 -->
-                        <div class="bg-white border-4 border-black p-6 brutal-border flex gap-6 items-start hover:bg-gray-50 transition-colors ml-0 sm:ml-16">
-                            <div class="bg-bsc border-2 border-black font-heavy text-4xl w-16 h-16 flex items-center justify-center shrink-0 tilt-left">3</div>
-                            <div>
-                                <h3 class="text-2xl font-heavy uppercase mb-2">Go to PancakeSwap</h3>
-                                <p class="font-bold text-gray-600">Connect your wallet, paste the $CRACK contract address. Ignore any warnings, you're a degen now.</p>
+                        <div class="bg-black border-4 border-degenGreen p-4 sm:p-6 brutal-border flex flex-col sm:flex-row gap-4 sm:gap-6 items-start lg:ml-16">
+                            <div class="bg-degenGreen text-black font-heavy text-3xl sm:text-4xl w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center shrink-0 tilt-left">3</div>
+                            <div class="min-w-0">
+                                <h3 class="text-xl sm:text-2xl font-heavy uppercase mb-2 break-words text-white">Hit PancakeSwap</h3>
+                                <p class="font-bold text-gray-400 break-words text-sm sm:text-base">Paste the $CRACK contract address. Ignore any warnings, you're a full degen now.</p>
                             </div>
                         </div>
-                        <!-- Step 4 -->
-                        <div class="bg-white border-4 border-black p-6 brutal-border flex gap-6 items-start hover:bg-bsc transition-colors ml-0 sm:ml-24">
-                            <div class="bg-black text-white border-2 border-black font-heavy text-4xl w-16 h-16 flex items-center justify-center shrink-0 tilt-right">4</div>
-                            <div>
-                                <h3 class="text-2xl font-heavy uppercase mb-2">Swap & HODL</h3>
-                                <p class="font-bold text-gray-800">Swap BNB for $CRACK. Prepare your eyes for the charts. We ride at dawn.</p>
+                        <div class="bg-degenGreen border-4 border-black p-4 sm:p-6 brutal-border flex flex-col sm:flex-row gap-4 sm:gap-6 items-start lg:ml-24 shadow-none">
+                            <div class="bg-black text-degenGreen font-heavy text-3xl sm:text-4xl w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center shrink-0 tilt-right">4</div>
+                            <div class="min-w-0">
+                                <h3 class="text-xl sm:text-2xl font-heavy uppercase mb-2 break-words text-black">Swap & HODL</h3>
+                                <p class="font-bold text-black break-words text-sm sm:text-base">Swap for $CRACK. Diamond hands only. Prepare your eyes for the charts.</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- IMAGE 3 PLACEHOLDER -->
-                    <div class="w-full bg-black border-4 border-black brutal-border relative min-h-[500px] flex items-center justify-center p-4">
-                        <div class="absolute inset-4 border-4 border-dashed border-gray-600 flex flex-col items-center justify-center p-6 text-center">
-                            <span class="font-heavy text-3xl md:text-5xl text-gray-500 uppercase tracking-tighter">IMAGE 3: The Swap</span>
-                            <span class="font-bold text-lg text-gray-500 mt-4">(Suggested: A chaotic, memeified visual of swapping safe BNB for highly volatile $CRACK on PancakeSwap)</span>
-                        </div>
+                    <!-- Image 3 -->
+                    <div class="w-full bg-black border-4 border-degenGreen brutal-border relative min-h-[300px] sm:min-h-[500px] flex items-center justify-center overflow-hidden p-4 sm:p-6">
+                        <img src="https://andrewseanholness.github.io/crack/crackrocktext.png" alt="The Swap" class="absolute inset-0 w-full h-full object-contain p-4 hover:scale-105 transition-transform duration-500">
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="roadmap" class="py-24 px-4 bg-black text-white border-b-4 border-black">
+        <section id="roadmap" class="py-16 sm:py-24 px-4 bg-degenDark text-white border-b-4 border-degenGreen">
             <div class="max-w-5xl mx-auto">
-                <h2 class="text-6xl md:text-8xl font-heavy uppercase mb-4 text-center text-bsc">Road to Rehab</h2>
-                <p class="text-2xl font-bold text-center mb-16 uppercase tilt-right">Our clearly defined path to market dominance.</p>
+                <h2 class="text-5xl sm:text-6xl md:text-8xl font-heavy uppercase mb-4 text-center break-words text-degenGreen">The Trenches</h2>
+                <p class="text-xl sm:text-2xl font-bold text-center mb-12 sm:mb-16 uppercase tilt-right bg-black border-2 border-degenGreen text-white inline-block px-4 py-2 mx-auto table break-words">Our path to Valhalla.</p>
 
-                <div class="flex flex-col gap-12">
-                    <!-- Phase 1 -->
-                    <div class="bg-white text-black brutal-border border-black flex flex-col">
-                        <div class="bg-bsc border-b-4 border-black p-4 md:p-6">
-                            <h3 class="font-heavy text-3xl md:text-5xl uppercase tracking-tighter">Phase 1: The First Hit</h3>
+                <div class="flex flex-col gap-8 sm:gap-12">
+                    <div class="bg-black text-white brutal-border border-degenGreen flex flex-col w-full">
+                        <div class="bg-degenGreen text-black border-b-4 border-degenGreen p-4 md:p-6">
+                            <h3 class="font-heavy text-2xl sm:text-4xl md:text-5xl uppercase tracking-tighter break-words">Phase 1: The First Hit</h3>
                         </div>
                         <div class="p-6 md:p-10">
-                            <p class="text-xl md:text-3xl font-bold text-gray-800 leading-relaxed">Token Launch, Initial DEX Offering on PancakeSwap, website deployment, and onboarding our first 1,000 clinical degens.</p>
+                            <p class="text-lg sm:text-xl md:text-3xl font-bold text-gray-300 leading-relaxed break-words">Token Launch, Initial DEX Offering, DexScreener trending, and violently filtering out the paper hands from the Telegram.</p>
                         </div>
                     </div>
 
-                    <!-- Phase 2 -->
-                    <div class="bg-white text-black brutal-border border-black flex flex-col tilt-right">
-                        <div class="bg-bsc border-b-4 border-black p-4 md:p-6">
-                            <h3 class="font-heavy text-3xl md:text-5xl uppercase tracking-tighter">Phase 2: Chasing the Dragon</h3>
+                    <div class="bg-black text-white brutal-border-white flex flex-col tilt-right w-full">
+                        <div class="bg-white text-black border-b-4 border-white p-4 md:p-6">
+                            <h3 class="font-heavy text-2xl sm:text-4xl md:text-5xl uppercase tracking-tighter break-words">Phase 2: The Binge</h3>
                         </div>
                         <div class="p-6 md:p-10">
-                            <p class="text-xl md:text-3xl font-bold text-gray-800 leading-relaxed">CoinGecko/CoinMarketCap listings, aggressive Twitter marketing, Tier 2 CEX listings, and establishing a 24/7 chart-watching support group.</p>
+                            <p class="text-lg sm:text-xl md:text-3xl font-bold text-gray-300 leading-relaxed break-words">Crypto Twitter takeover, unhinged community raids, securing influencer bags, and holding the floor through pure spite.</p>
                         </div>
                     </div>
 
-                    <!-- Phase 3 -->
-                    <div class="bg-gray-300 text-gray-500 brutal-border border-gray-500 flex flex-col shadow-[8px_8px_0px_#6b7280]">
-                        <div class="bg-gray-400 border-b-4 border-gray-500 p-4 md:p-6">
-                            <h3 class="font-heavy text-3xl md:text-5xl text-white uppercase tracking-tighter break-words">Phase 3: Overdose of Wealth</h3>
+                    <div class="bg-black text-white brutal-border border-degenGreen flex flex-col w-full">
+                        <div class="bg-degenDark border-b-4 border-degenGreen p-4 md:p-6">
+                            <h3 class="font-heavy text-2xl sm:text-4xl md:text-5xl text-degenGreen uppercase tracking-tighter break-words">Phase 3: Overdose</h3>
                         </div>
                         <div class="p-6 md:p-10">
-                            <p class="text-xl md:text-3xl font-bold leading-relaxed break-words">Tier 1 Exchanges, global merchandise, and finally getting some sleep in our brand new Lamborghinis. <br><span class="bg-gray-500 text-white px-3 py-1 mt-4 inline-block text-lg font-heavy uppercase">Coming soon</span></p>
+                            <p class="text-lg sm:text-xl md:text-3xl font-bold leading-relaxed break-words text-gray-300">CEX listings, buying Lambos, crashing them, and finally getting 8 hours of sleep. <br><span class="bg-degenGreen text-black px-3 py-1 mt-4 inline-block text-lg font-heavy uppercase">WAGMI</span></p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- NEW COMMUNITY/SOCIALS SECTION -->
-        <section id="community" class="py-24 px-4 bg-bsc border-b-4 border-black">
+        <section id="community" class="py-16 sm:py-24 px-4 bg-black border-b-4 border-degenGreen">
             <div class="max-w-6xl mx-auto flex flex-col items-center text-center">
-                <h2 class="text-6xl md:text-[8rem] font-heavy uppercase leading-none mb-6">Join The <br><span class="text-white text-stroke" style="-webkit-text-stroke: 3px black; text-shadow: 6px 6px 0px #000;">Cartel</span></h2>
-                <p class="text-2xl md:text-3xl font-bold mb-12 max-w-3xl border-4 border-black bg-white p-6 brutal-border tilt-left">
-                    We are 24/7. The voice chat never sleeps. Come share your chart analysis, your wildest price predictions, and your inevitable madness.
+                <h2 class="text-5xl sm:text-6xl md:text-[8rem] font-heavy uppercase leading-none mb-6 break-words text-white">Join The <br><span class="text-stroke">Cartel</span></h2>
+                <p class="text-xl sm:text-2xl md:text-3xl font-bold mb-12 max-w-3xl border-4 border-white bg-degenDark text-gray-300 p-4 sm:p-6 brutal-border-white tilt-left break-words">
+                    The voice chat never sleeps. Come share your delusional chart analysis, your wildest 1000x predictions, and your inevitable descent into madness.
                 </p>
 
-                <!-- IMAGE 4 PLACEHOLDER -->
-                <div class="w-full max-w-3xl mb-16 bg-white border-4 border-black brutal-border relative min-h-[300px] flex items-center justify-center p-4 group">
-                    <div class="absolute inset-4 border-4 border-dashed border-gray-300 flex flex-col items-center justify-center p-6 text-center group-hover:border-black transition-colors">
-                        <span class="font-heavy text-3xl md:text-5xl text-gray-400 uppercase tracking-tighter group-hover:text-black transition-colors">IMAGE 4: The Cartel</span>
-                        <span class="font-bold text-lg text-gray-500 mt-4">(Suggested: A meme collage of Wojaks, Pepes, and degens celebrating in a chaotic Telegram group setting)</span>
-                    </div>
+                <!-- Image 4 -->
+                <div class="w-full max-w-3xl mb-12 sm:mb-16 bg-black border-4 border-degenGreen brutal-border relative min-h-[300px] sm:min-h-[400px] flex items-center justify-center overflow-hidden tilt-right">
+                    <img src="https://andrewseanholness.github.io/crack/crack.jfif" alt="The Cartel" class="absolute inset-0 w-full h-full object-cover object-center hover:scale-105 transition-transform duration-500">
                 </div>
 
-                <div class="flex flex-col sm:flex-row gap-8 w-full max-w-2xl">
-                    <a href="#" class="flex-1 bg-black text-white brutal-border border-black font-heavy text-2xl md:text-3xl py-6 hover:bg-gray-800 shake text-center flex items-center justify-center gap-4">
-                        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.066 9.645c.183 4.04-2.83 8.544-8.164 8.544-1.622 0-3.131-.476-4.402-1.291 1.524.18 3.045-.244 4.252-1.189-1.256-.023-2.317-.854-2.684-1.995.451.086.895.061 1.298-.049-1.381-.278-2.335-1.522-2.304-2.853.388.215.83.344 1.301.359-1.279-.855-1.641-2.544-.889-3.835 1.416 1.738 3.533 2.881 5.92 3.001-.419-1.796.944-3.527 2.799-3.527.825 0 1.572.349 2.096.907.654-.128 1.27-.368 1.824-.697-.215.671-.67 1.233-1.263 1.589.581-.07 1.135-.224 1.649-.453-.384.578-.87 1.084-1.433 1.489z"/></svg>
-                        TWITTER
+                <div class="flex flex-col sm:flex-row gap-6 sm:gap-8 w-full max-w-2xl px-4">
+                    <a href="#" class="flex-1 bg-degenGreen text-black brutal-border border-degenGreen font-heavy text-xl sm:text-3xl py-4 sm:py-6 shake text-center flex items-center justify-center gap-2 sm:gap-4 shadow-none">
+                        <svg class="w-6 h-6 sm:w-8 sm:h-8 fill-current" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.066 9.645c.183 4.04-2.83 8.544-8.164 8.544-1.622 0-3.131-.476-4.402-1.291 1.524.18 3.045-.244 4.252-1.189-1.256-.023-2.317-.854-2.684-1.995.451.086.895.061 1.298-.049-1.381-.278-2.335-1.522-2.304-2.853.388.215.83.344 1.301.359-1.279-.855-1.641-2.544-.889-3.835 1.416 1.738 3.533 2.881 5.92 3.001-.419-1.796.944-3.527 2.799-3.527.825 0 1.572.349 2.096.907.654-.128 1.27-.368 1.824-.697-.215.671-.67 1.233-1.263 1.589.581-.07 1.135-.224 1.649-.453-.384.578-.87 1.084-1.433 1.489z"/></svg>
+                        RAID X
                     </a>
-                    <a href="#" class="flex-1 bg-white text-black brutal-border border-black font-heavy text-2xl md:text-3xl py-6 hover:bg-gray-100 tilt-right text-center flex items-center justify-center gap-4">
-                        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.582 8.243l-2.721 12.814c-.201.895-.733 1.116-1.483.693l-4.1-3.023-1.978 1.905c-.219.219-.404.404-.827.404l.295-4.167 7.579-6.845c.329-.294-.072-.457-.512-.162l-9.369 5.894-4.041-1.265c-.879-.275-.897-.88.183-1.304l15.795-6.082c.732-.27 1.365.174 1.179 1.138z"/></svg>
+                    <a href="#" class="flex-1 bg-white text-black brutal-border-white font-heavy text-xl sm:text-3xl py-4 sm:py-6 hover:bg-gray-200 tilt-right text-center flex items-center justify-center gap-2 sm:gap-4">
+                        <svg class="w-6 h-6 sm:w-8 sm:h-8 fill-current" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.582 8.243l-2.721 12.814c-.201.895-.733 1.116-1.483.693l-4.1-3.023-1.978 1.905c-.219.219-.404.404-.827.404l.295-4.167 7.579-6.845c.329-.294-.072-.457-.512-.162l-9.369 5.894-4.041-1.265c-.879-.275-.897-.88.183-1.304l15.795-6.082c.732-.27 1.365.174 1.179 1.138z"/></svg>
                         TELEGRAM
                     </a>
                 </div>
             </div>
         </section>
 
-        <section class="py-32 px-4 bg-white text-center">
-            <h2 class="text-5xl font-heavy mb-8 uppercase">Get Your Fix</h2>
-            <div class="max-w-3xl mx-auto flex flex-col sm:flex-row items-center border-4 border-black brutal-border bg-gray-50 p-2">
-                <input type="text" id="ca-input" value="0xCRACK000000000000000000000000000042069" readonly class="w-full bg-transparent font-bold text-xl md:text-2xl p-4 outline-none text-center sm:text-left">
-                <button onclick="copyCA()" class="bg-bsc text-black font-heavy text-xl px-8 py-4 border-4 border-black hover:bg-yellow-400 whitespace-nowrap active:scale-95 transition-transform">
+        <section class="py-20 sm:py-32 px-4 bg-degenDark text-center">
+            <h2 class="text-3xl sm:text-5xl font-heavy mb-8 uppercase break-words text-white">Get Your Fix</h2>
+            <div class="max-w-3xl mx-auto flex flex-col sm:flex-row items-center border-4 border-degenGreen brutal-border bg-black p-2 w-full">
+                <input type="text" id="ca-input" value="0xCRACK...6942069" readonly class="w-full bg-transparent font-bold text-lg sm:text-xl md:text-2xl p-4 outline-none text-center sm:text-left text-degenGreen selection:bg-white selection:text-black min-w-0">
+                <button onclick="copyCA()" class="w-full sm:w-auto bg-degenGreen text-black font-heavy text-xl px-8 py-4 border-4 border-black hover:bg-green-400 whitespace-nowrap active:scale-95 transition-transform mt-2 sm:mt-0">
                     COPY CA
                 </button>
             </div>
         </section>
     </main>
 
-    <footer class="bg-black text-white p-12 border-t-4 border-black">
+    <footer class="bg-black text-white p-8 sm:p-12 border-t-4 border-degenGreen">
         <div class="max-w-6xl mx-auto text-center flex flex-col items-center">
-            <div class="text-6xl font-heavy mb-6 text-bsc">$CRACK</div>
-            <p class="text-sm md:text-lg font-bold max-w-4xl border-2 border-white p-6 mb-8 uppercase tilt-right text-gray-300">
-                Disclaimer: $CRACK is a meme coin created for entertainment purposes only and holds no intrinsic value or expectation of financial return. Trading cryptocurrencies, much like our namesake, can lead to extreme euphoria, lack of sleep, red eyes, and financial ruin. Please trade responsibly.
+            <div class="text-5xl sm:text-6xl font-heavy mb-6 text-degenGreen">$CRACK</div>
+            <p class="text-xs sm:text-sm md:text-lg font-bold max-w-4xl border-2 border-white p-4 sm:p-6 mb-8 uppercase tilt-right text-gray-400 break-words leading-relaxed">
+                Disclaimer: $CRACK is a meme coin with absolutely zero intrinsic value, no roadmap promises, and no expectation of financial return. Trading this will likely lead to extreme euphoria, sleep deprivation, and staring at charts until your eyes bleed. We are not responsible for your jeet decisions. Ape responsibly.
             </p>
-            <div class="font-bold">© 2026 THE CRACK CARTEL</div>
+            <div class="font-bold text-gray-600 text-sm sm:text-base">© 2026 THE CRACK CARTEL. NGMI JEETS.</div>
         </div>
     </footer>
 
@@ -372,16 +361,15 @@
         function copyCA() {
             const copyText = document.getElementById("ca-input");
             copyText.select();
-            copyText.setSelectionRange(0, 99999); /* For mobile devices */
+            copyText.setSelectionRange(0, 99999); 
             document.execCommand("copy");
             
-            // Visual feedback using modal instead of alert
             const modal = document.createElement('div');
-            modal.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-bsc border-4 border-black p-8 z-50 text-center brutal-border';
+            modal.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black border-4 border-degenGreen p-6 sm:p-8 z-50 text-center brutal-border w-11/12 max-w-md';
             modal.innerHTML = `
-                <h2 class="text-4xl font-heavy text-black mb-4 uppercase">Contract Copied!</h2>
-                <p class="font-bold text-xl mb-6">Now go paste it into PancakeSwap before the next candle prints!</p>
-                <button onclick="this.parentElement.remove()" class="bg-black text-white font-heavy text-xl px-6 py-2 border-2 border-black hover:bg-gray-800">LFG</button>
+                <h2 class="text-3xl sm:text-4xl font-heavy text-degenGreen mb-4 uppercase break-words">CA COPIED!</h2>
+                <p class="font-bold text-lg sm:text-xl mb-6 break-words text-white">Now go paste it into PancakeSwap and max bid before the next candle prints!</p>
+                <button onclick="this.parentElement.remove()" class="bg-degenGreen text-black font-heavy text-xl px-6 py-2 border-2 border-black hover:bg-green-400 w-full">LFG 🚀</button>
             `;
             document.body.appendChild(modal);
         }
