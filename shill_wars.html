@@ -18,67 +18,83 @@
     </script>
     <style>
         body { background-color: #0A0F11; color: #fff; overflow: hidden; touch-action: manipulation; }
-        .brutal-border { border: 2px solid #39FF14; }
+        .brutal-border { border: 2px solid #39FF14; box-shadow: 4px 4px 0 #39FF14; }
         .brutal-btn { transition: all 0.1s; border: 2px solid #39FF14; background: #000;}
-        .brutal-btn:active { transform: scale(0.95); background: #39FF14; color: #000; }
+        .brutal-btn:active { transform: translate(2px, 2px); background: #39FF14; color: #000; box-shadow: none !important;}
         .scanlines::before {
             content: " "; display: block; position: absolute; top: 0; left: 0; bottom: 0; right: 0;
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
             z-index: 50; background-size: 100% 4px; pointer-events: none;
         }
         ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-track { background: #000; border-left: 1px solid #333; }
         ::-webkit-scrollbar-thumb { background: #39FF14; }
         .tab-btn.active { background: #39FF14; color: #000; }
+        
+        /* New Animations */
+        .marquee { white-space: nowrap; overflow: hidden; box-sizing: border-box; }
+        .marquee span { display: inline-block; padding-left: 100%; animation: marquee 15s linear infinite; }
+        @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
+        
+        .float-text { position: absolute; font-weight: bold; font-size: 1.2rem; pointer-events: none; animation: floatUp 1.5s ease-out forwards; z-index: 100; text-shadow: 2px 2px 0 #000; }
+        @keyframes floatUp { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-40px) scale(1.2); } }
+        
+        .mini-bar { transition: height 0.3s ease, background-color 0.3s ease; }
     </style>
 </head>
 <body class="font-mono antialiased h-screen flex flex-col scanlines text-sm sm:text-base selection:bg-degenGreen selection:text-black">
 
     <!-- START SCREEN -->
     <div id="start-screen" class="fixed inset-0 bg-black z-[100] flex flex-col items-center justify-center p-4 overflow-y-auto">
-        <div class="max-w-2xl w-full border-4 border-degenGreen p-6 bg-gray-900 shadow-[8px_8px_0_#39FF14]">
+        <div class="max-w-2xl w-full border-4 border-degenGreen p-6 bg-gray-900 brutal-border">
             <h1 class="text-4xl sm:text-6xl font-heavy text-degenGreen uppercase tracking-tighter mb-4 text-center">SHILL WARS</h1>
             
-            <div class="space-y-4 text-gray-300 font-bold text-sm sm:text-base mb-8">
+            <div class="space-y-4 text-gray-300 font-bold text-sm sm:text-base mb-8 border-t border-gray-700 pt-4">
                 <p><strong class="text-white">MISSION:</strong> You have <span class="text-degenGreen">30 Days</span> to turn a 1.00 BNB Cartel Loan into life-changing wealth.</p>
-                <div class="border-l-4 border-degenGreen pl-4 space-y-2">
-                    <p>• <strong class="text-white">TRADE:</strong> Buy low, sell high. Travel between Web3 platforms (Twitter, Telegram, etc.) to find price discrepancies and trigger events.</p>
-                    <p>• <strong class="text-white">SURVIVE:</strong> Watch your <span class="text-degenRed">STRESS</span> meter. High volatility coins spike stress. If it hits 100%, you have a heart attack and die. <span class="text-green-400">Touch Grass</span> to heal.</p>
-                    <p>• <strong class="text-white">DEBT:</strong> The Cartel charges 15% daily interest on your initial 1 BNB loan. Pay it off in the Stash tab before they find you.</p>
-                    <p>• <strong class="text-white">YIELD:</strong> Stash unused BNB in the Bank (Staking) to earn a safe 5% daily yield.</p>
+                <div class="border-l-4 border-degenGreen pl-4 space-y-3 bg-black p-4">
+                    <p>• <strong class="text-white">TRADE:</strong> Buy low, sell high. Watch the mini-charts. Travel between Web3 platforms to trigger market events.</p>
+                    <p>• <strong class="text-white">SURVIVE:</strong> Watch your <span class="text-degenRed">STRESS</span> meter. Highly volatile coins spike stress. If it hits 100%, you die.</p>
+                    <p>• <strong class="text-white">DEBT:</strong> The Cartel charges 15% daily interest. Pay it off in the Stash tab before Day 30.</p>
+                    <p>• <strong class="text-white">BLACK MARKET:</strong> Use the Stash tab to buy "Pills" with BNB to lower stress instantly without wasting a day touching grass.</p>
                 </div>
-                <p class="text-center text-degenGreen uppercase mt-4 animate-pulse">Warning: Extreme Volatility Ahead</p>
+                <p class="text-center text-degenGreen uppercase mt-4 animate-pulse">Warning: High Volatility</p>
             </div>
             
-            <button onclick="startGame()" class="w-full bg-degenGreen text-black font-heavy text-2xl py-4 border-2 border-black hover:bg-white transition-colors uppercase">Accept Loan (Start Game)</button>
+            <button onclick="startGame()" class="w-full bg-degenGreen text-black font-heavy text-2xl py-4 border-2 border-black hover:bg-white transition-colors uppercase shadow-[6px_6px_0_#000] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[4px_4px_0_#000]">Accept Loan (Start)</button>
         </div>
     </div>
 
     <!-- MAIN GAME UI -->
-    <div id="game-ui" class="hidden h-full flex-col">
-        <header class="bg-black border-b-2 border-degenGreen p-3 shrink-0 flex flex-col sm:flex-row justify-between items-center gap-2 z-10">
+    <div id="game-ui" class="hidden h-full flex-col relative">
+        
+        <!-- NEWS TICKER -->
+        <div class="bg-degenGreen text-black font-bold text-xs border-b-2 border-black marquee shrink-0">
+            <span id="news-ticker">WELCOME TO THE TRENCHES • WATCH OUT FOR RUG PULLS • ELON IS WATCHING • </span>
+        </div>
+
+        <header class="bg-black border-b-2 border-degenGreen p-3 shrink-0 flex flex-col sm:flex-row justify-between items-center gap-2 z-10 relative">
             <div class="flex justify-between w-full sm:w-auto items-center gap-4">
-                <h1 class="text-xl sm:text-2xl font-heavy text-degenGreen uppercase tracking-tighter">Shill Wars</h1>
-                <div class="text-xs bg-degenGreen text-black px-2 py-1 font-bold">DAY <span id="ui-day">1</span>/30</div>
+                <h1 class="text-xl sm:text-2xl font-heavy text-white uppercase tracking-tighter text-shadow drop-shadow-[2px_2px_0_#39FF14]">Shill Wars</h1>
+                <div class="text-xs border-2 border-degenGreen text-degenGreen px-2 py-1 font-bold bg-gray-900">DAY <span id="ui-day">1</span>/30</div>
             </div>
             
-            <div class="grid grid-cols-4 sm:flex gap-4 sm:gap-6 text-xs sm:text-sm w-full sm:w-auto justify-between sm:justify-end font-bold">
+            <div class="grid grid-cols-4 sm:flex gap-4 sm:gap-6 text-xs sm:text-sm w-full sm:w-auto justify-between sm:justify-end font-bold bg-gray-900 p-2 sm:p-0 sm:bg-transparent rounded sm:rounded-none">
                 <div class="flex flex-col">
-                    <span class="text-gray-500">WALLET</span>
-                    <span id="ui-bnb" class="text-white">1.000</span>
+                    <span class="text-gray-500 text-[10px] sm:text-xs">WALLET</span>
+                    <span id="ui-bnb" class="text-degenGreen">1.000</span>
                 </div>
                 <div class="flex flex-col">
-                    <span class="text-gray-500">BANK</span>
+                    <span class="text-gray-500 text-[10px] sm:text-xs">BANK</span>
                     <span id="ui-bank" class="text-white">0.000</span>
                 </div>
                 <div class="flex flex-col">
-                    <span class="text-gray-500">DAILY PNL</span>
+                    <span class="text-gray-500 text-[10px] sm:text-xs">DAILY PNL</span>
                     <span id="ui-daily-pnl" class="text-gray-400">0.000</span>
                 </div>
-                <div class="flex flex-col w-full sm:w-20">
-                    <span class="text-gray-500">STRESS</span>
-                    <div class="w-full h-3 bg-gray-800 border border-gray-600 mt-1">
-                        <div id="ui-stress" class="h-full bg-degenGreen transition-all" style="width: 0%;"></div>
+                <div class="flex flex-col w-full sm:w-24">
+                    <span class="text-gray-500 text-[10px] sm:text-xs">STRESS</span>
+                    <div class="w-full h-3 bg-gray-800 border border-gray-600 mt-1 relative">
+                        <div id="ui-stress" class="h-full bg-degenGreen transition-all duration-300" style="width: 0%;"></div>
                     </div>
                 </div>
             </div>
@@ -86,7 +102,7 @@
 
         <div class="flex border-b-2 border-gray-800 shrink-0 bg-black sm:hidden z-10">
             <button onclick="switchTab('market')" id="tab-market" class="tab-btn active flex-1 py-2 font-bold uppercase text-xs border-r border-gray-800">Market</button>
-            <button onclick="switchTab('stash')" id="tab-stash" class="tab-btn flex-1 py-2 font-bold uppercase text-xs border-r border-gray-800">Stash & PnL</button>
+            <button onclick="switchTab('stash')" id="tab-stash" class="tab-btn flex-1 py-2 font-bold uppercase text-xs border-r border-gray-800">Stash</button>
             <button onclick="switchTab('logs')" id="tab-logs" class="tab-btn flex-1 py-2 font-bold uppercase text-xs">Logs</button>
         </div>
 
@@ -96,66 +112,84 @@
             <div id="view-market" class="w-full sm:flex-1 p-3 sm:p-4 flex flex-col h-full overflow-y-auto sm:border-r border-gray-800 pb-24 sm:pb-4">
                 <div class="flex justify-between items-end border-b border-gray-800 pb-2 mb-4 shrink-0">
                     <h2 class="text-gray-400 font-bold uppercase text-xs">Current Location</h2>
-                    <div id="ui-location" class="text-degenGreen font-heavy uppercase text-xl">Twitter</div>
+                    <div id="ui-location" class="text-white font-heavy uppercase text-xl drop-shadow-[2px_2px_0_#39FF14]">Twitter</div>
                 </div>
-                <div id="ui-market" class="flex-1 flex flex-col gap-3">
+                <div id="ui-market" class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-3 pb-8">
                     <!-- Market items injected here -->
                 </div>
             </div>
 
             <!-- Right: Stash & Logs -->
-            <div id="view-stash" class="hidden sm:flex w-full sm:w-96 p-3 sm:p-4 flex-col h-full overflow-y-auto sm:border-r border-gray-800 bg-black pb-24 sm:pb-4">
-                <h2 class="text-degenGreen font-heavy uppercase text-lg mb-4 border-b border-gray-800 pb-2 shrink-0">The Bag (PnL)</h2>
+            <div id="view-stash" class="hidden sm:flex w-full sm:w-[22rem] p-3 sm:p-4 flex-col h-full overflow-y-auto sm:border-r border-gray-800 bg-black pb-24 sm:pb-4">
+                <h2 class="text-white font-heavy uppercase text-lg mb-4 border-b border-gray-800 pb-2 shrink-0 drop-shadow-[2px_2px_0_#39FF14]">The Bag</h2>
                 
-                <div id="ui-inventory" class="flex-1 flex flex-col gap-2">
+                <div id="ui-inventory" class="flex flex-col gap-2 mb-4 shrink-0">
                     <!-- Inventory injected here -->
                 </div>
                 
-                <div class="mt-4 border-t border-gray-800 pt-4 shrink-0">
-                    <h3 class="text-gray-400 font-bold text-xs mb-2 uppercase">Bank (Staking Protocol)</h3>
-                    <div class="flex gap-2">
-                        <button onclick="bankAction('deposit')" class="flex-1 border border-white text-white p-2 text-xs hover:bg-white hover:text-black font-bold">DEPOSIT ALL</button>
-                        <button onclick="bankAction('withdraw')" class="flex-1 border border-white text-white p-2 text-xs hover:bg-white hover:text-black font-bold">WITHDRAW ALL</button>
+                <div class="border-t border-gray-800 pt-4 shrink-0 mb-4">
+                    <h3 class="text-gray-400 font-bold text-xs mb-2 uppercase flex justify-between">
+                        <span>Black Market (Items)</span>
+                    </h3>
+                    <div class="flex flex-col gap-2">
+                        <button onclick="buyPill()" class="w-full border border-gray-700 bg-gray-900 text-white p-2 text-xs hover:border-degenGreen flex justify-between items-center transition-colors">
+                            <span class="font-bold text-degenGreen">💊 Chill Pill (-30% Stress)</span>
+                            <span class="text-gray-400">0.25 BNB</span>
+                        </button>
                     </div>
-                    <div id="ui-debt" class="mt-4 text-degenRed font-bold text-xs uppercase hidden">Cartel Debt: <span></span> BNB</div>
-                    <button id="btn-payloan" onclick="payLoan()" class="w-full border border-degenRed text-degenRed p-2 text-xs mt-2 hover:bg-degenRed hover:text-black hidden font-bold">PAY CARTEL</button>
+                </div>
+
+                <div class="border-t border-gray-800 pt-4 shrink-0">
+                    <h3 class="text-gray-400 font-bold text-xs mb-2 uppercase">Bank (5% Yield)</h3>
+                    <div class="flex gap-2">
+                        <button onclick="bankAction('deposit')" class="flex-1 brutal-btn text-white p-2 text-xs font-bold shadow-[2px_2px_0_#39FF14]">DEPOSIT</button>
+                        <button onclick="bankAction('withdraw')" class="flex-1 brutal-btn text-white p-2 text-xs font-bold shadow-[2px_2px_0_#39FF14]">WITHDRAW</button>
+                    </div>
+                    <div id="ui-debt" class="mt-4 bg-red-900/20 border border-degenRed p-2 hidden">
+                        <div class="text-degenRed font-bold text-xs uppercase flex justify-between">
+                            <span>Cartel Debt:</span>
+                            <span><span id="debt-amt"></span> BNB</span>
+                        </div>
+                        <button id="btn-payloan" onclick="payLoan()" class="w-full bg-degenRed text-white p-2 text-xs mt-2 hover:bg-white hover:text-black font-bold uppercase transition-colors">Pay Off Loan</button>
+                    </div>
                 </div>
             </div>
 
             <!-- Logs View -->
-            <div id="view-logs" class="hidden sm:flex w-full sm:w-72 p-3 sm:p-4 flex-col h-full bg-black pb-24 sm:pb-4">
+            <div id="view-logs" class="hidden sm:flex w-full sm:w-64 p-3 sm:p-4 flex-col h-full bg-black pb-24 sm:pb-4">
                 <h2 class="text-gray-400 font-bold text-xs mb-2 uppercase border-b border-gray-800 pb-2 shrink-0">Event Feed</h2>
-                <div id="ui-log" class="flex-1 overflow-y-auto space-y-2 text-xs text-gray-400 flex flex-col-reverse">
+                <div id="ui-log" class="flex-1 overflow-y-auto space-y-2 text-xs text-gray-400 flex flex-col-reverse break-words">
                     <!-- Logs here -->
                 </div>
             </div>
         </main>
 
-        <footer class="bg-black border-t-2 border-degenGreen p-2 sm:p-4 shrink-0 absolute sm:relative bottom-0 left-0 w-full z-20">
-            <h2 class="text-gray-500 text-xs uppercase font-bold mb-2 text-center sm:text-left">Travel to next block (Day ++):</h2>
-            <div id="ui-locations" class="grid grid-cols-3 sm:flex sm:flex-wrap gap-2 justify-center sm:justify-start">
-                <!-- Travel buttons injected here -->
+        <footer class="bg-black border-t-2 border-degenGreen p-2 sm:p-3 shrink-0 absolute sm:relative bottom-0 left-0 w-full z-20">
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-2">
+                <span class="text-gray-500 text-xs uppercase font-bold text-center sm:text-left">Travel (Day ++):</span>
+                <div id="ui-locations" class="grid grid-cols-3 sm:flex flex-wrap gap-2 justify-center sm:justify-end w-full sm:w-auto">
+                    <!-- Travel buttons injected here -->
+                </div>
             </div>
         </footer>
     </div>
 
     <!-- Game Over Modal -->
     <div id="game-over" class="fixed inset-0 bg-black/95 hidden flex-col items-center justify-center z-[150] p-4">
-        <div class="border-4 border-degenGreen bg-black p-8 max-w-md w-full text-center">
+        <div class="border-4 border-degenGreen bg-black p-8 max-w-md w-full text-center brutal-border">
             <h2 id="go-title" class="text-4xl font-heavy text-degenGreen mb-4 uppercase">GAME OVER</h2>
             <p class="text-lg mb-2 text-gray-400">Total Net Worth:</p>
-            <p><span id="final-bnb" class="text-4xl text-degenGreen font-heavy mb-6 block"></span></p>
+            <p><span id="final-bnb" class="text-4xl text-degenGreen font-heavy mb-6 block drop-shadow-[2px_2px_0_#fff]"></span></p>
             <p id="game-over-msg" class="text-white font-bold mb-8 text-sm leading-relaxed border-t border-gray-800 pt-4"></p>
-            <button onclick="location.reload()" class="w-full bg-degenGreen text-black font-heavy text-xl py-4 brutal-btn">PLAY AGAIN</button>
+            <button onclick="location.reload()" class="w-full bg-degenGreen text-black font-heavy text-xl py-4 brutal-btn shadow-[4px_4px_0_#fff]">PLAY AGAIN</button>
         </div>
     </div>
 
     <script>
         const state = {
-            day: 1, maxDays: 30,
-            location: 'Twitter',
+            day: 1, maxDays: 30, location: 'Twitter',
             bnb: 1.00, bank: 0.00, loan: 1.00, stress: 0,
-            lastNetWorth: 1.00, // For daily PnL
+            lastNetWorth: 1.00,
             inventory: { 
                 'CRACK': {amt: 0, avgCost: 0}, 
                 'PEPE': {amt: 0, avgCost: 0}, 
@@ -167,7 +201,11 @@
             basePrices: { 'CRACK': 0.05, 'PEPE': 0.001, 'DOGE': 0.15, 'WIF': 2.50, 'POPCAT': 0.50 },
             volatility: { 'CRACK': 0.9, 'PEPE': 0.6, 'DOGE': 0.2, 'WIF': 0.5, 'POPCAT': 0.7 },
             history: { 'CRACK': [], 'PEPE': [], 'DOGE': [], 'WIF': [], 'POPCAT': [] },
-            locations: ['Twitter', 'Telegram', 'Discord', '4Chan', 'Touch Grass']
+            locations: ['Twitter', 'Telegram', 'Discord', '4Chan', 'Touch Grass'],
+            newsHeadlines: [
+                "MARKET CHOPPY, DEGENS SWEAT", "SEC INVESTIGATES EVERYTHING", "NEW SHITCOIN LAUNCHES EVERY SECOND", 
+                "GAS FEES HIT NEW HIGHS", "WHALES MOVING MILLIONS", "INFLUENCER APOLOGIZES FOR RUG PULL"
+            ]
         };
 
         const els = {
@@ -176,31 +214,23 @@
             dailyPnl: document.getElementById('ui-daily-pnl'), stress: document.getElementById('ui-stress'), 
             inv: document.getElementById('ui-inventory'), market: document.getElementById('ui-market'), 
             locs: document.getElementById('ui-locations'), log: document.getElementById('ui-log'), 
-            debt: document.getElementById('ui-debt'), btnPay: document.getElementById('btn-payloan')
+            debt: document.getElementById('ui-debt'), debtAmt: document.getElementById('debt-amt'),
+            ticker: document.getElementById('news-ticker')
         };
 
         function startGame() {
             document.getElementById('start-screen').classList.add('hidden');
             document.getElementById('game-ui').classList.remove('hidden');
             document.getElementById('game-ui').classList.add('flex');
-            randomizePrices();
-            render();
-            log("Cartel loan accepted. Get trading. Don't let stress hit 100%.", true);
-        }
-
-        function log(msg, isAlert = false) {
-            const div = document.createElement('div');
-            div.className = isAlert ? 'text-degenGreen font-bold border-l-2 border-degenGreen pl-2' : 'pl-2 border-l border-gray-800';
-            div.innerHTML = `<span class="opacity-50">[D${state.day}]</span> ${msg}`;
-            els.log.prepend(div);
             
-            if(window.innerWidth < 640 && document.getElementById('view-logs').classList.contains('hidden')) {
-                const toast = document.createElement('div');
-                toast.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 bg-black border border-degenGreen text-degenGreen text-xs font-bold p-2 z-[200] pointer-events-none transition-opacity duration-500';
-                toast.innerText = msg;
-                document.body.appendChild(toast);
-                setTimeout(() => { toast.style.opacity = '0'; setTimeout(()=>toast.remove(), 500); }, 2000);
+            // Init history with base prices
+            for(let c in state.basePrices) {
+                for(let i=0; i<8; i++) state.history[c].push(state.basePrices[c]);
             }
+            randomizePrices(true);
+            render();
+            log("Cartel loan accepted. Get trading. Avoid 100% stress.", true);
+            updateTicker("CARTEL LOAN ISSUED • 30 DAYS TO PAY •");
         }
 
         function switchTab(tab) {
@@ -213,48 +243,99 @@
             document.getElementById(`tab-${tab}`).classList.add('active');
         }
 
-        function randomizePrices() {
+        function log(msg, isAlert = false) {
+            const div = document.createElement('div');
+            div.className = isAlert ? 'text-degenGreen font-bold border-l-2 border-degenGreen pl-2 bg-degenGreen/10 py-1' : 'pl-2 border-l border-gray-800';
+            div.innerHTML = `<span class="opacity-50">[D${state.day}]</span> ${msg}`;
+            els.log.prepend(div);
+            
+            // Mobile toast
+            if(window.innerWidth < 640 && document.getElementById('view-logs').classList.contains('hidden')) {
+                const toast = document.createElement('div');
+                toast.className = 'fixed top-12 left-1/2 transform -translate-x-1/2 bg-black border border-degenGreen text-degenGreen text-xs font-bold p-2 z-[200] pointer-events-none transition-opacity duration-500 shadow-lg whitespace-nowrap';
+                toast.innerText = msg;
+                document.body.appendChild(toast);
+                setTimeout(() => { toast.style.opacity = '0'; setTimeout(()=>toast.remove(), 500); }, 1500);
+            }
+        }
+
+        function updateTicker(headline) {
+            const filler = state.newsHeadlines[Math.floor(Math.random() * state.newsHeadlines.length)];
+            els.ticker.innerText = `${headline} • ${filler} • ${state.newsHeadlines[Math.floor(Math.random() * state.newsHeadlines.length)]} • `;
+        }
+
+        function randomizePrices(isInit = false) {
+            let eventHeadline = "";
             for (let coin in state.basePrices) {
-                const base = state.basePrices[coin];
                 const vol = state.volatility[coin];
+                let change = 1 + ((Math.random() * vol * 2) - vol); // Random walk
                 
-                let change = 1 + ((Math.random() * vol * 2) - vol);
-                const oldPrice = state.prices[coin] || base;
+                // Base reversion logic so things don't go to exactly 0 or infinity instantly
+                if(state.prices[coin] > state.basePrices[coin] * 5) change *= 0.8;
+                if(state.prices[coin] < state.basePrices[coin] * 0.2) change *= 1.2;
+
+                const oldPrice = state.prices[coin] || state.basePrices[coin];
                 let newPrice = Math.max(0.00001, oldPrice * change);
                 
                 state.prices[coin] = newPrice;
                 state.history[coin].push(newPrice);
-                if(state.history[coin].length > 5) state.history[coin].shift();
+                if(state.history[coin].length > 10) state.history[coin].shift(); // Keep last 10 points for chart
             }
             
-            if (state.location !== 'Touch Grass' && Math.random() < 0.35) {
-                const coins = Object.keys(state.basePrices);
-                const randomCoin = coins[Math.floor(Math.random() * coins.length)];
-                
-                const events = [
-                    { type: 'pump', text: `🚀 ELON TWEETED ABOUT $${randomCoin}! PUMPING!`, mult: (2 + Math.random() * 3) },
-                    { type: 'dump', text: `🚨 DEV RUGGED $${randomCoin}! DUMPING!`, mult: 0.1 },
-                    { type: 'hack', text: `💀 EXCHANGE HACKED! ALL COINS DUMP 30%!`, mult: 0.7, global: true }
-                ];
-                
-                const ev = events[Math.floor(Math.random() * events.length)];
-                
-                if(ev.global) {
-                    for(let c in state.prices) state.prices[c] *= ev.mult;
-                } else {
-                    state.prices[randomCoin] *= ev.mult;
+            if (!isInit && state.location !== 'Touch Grass') {
+                const rand = Math.random();
+                if(rand < 0.40) { // 40% chance of event
+                    const coins = Object.keys(state.basePrices);
+                    const randomCoin = coins[Math.floor(Math.random() * coins.length)];
+                    
+                    const events = [
+                        { type: 'pump', text: `🚀 ELON TWEETED ABOUT $${randomCoin}! PUMPING!`, mult: (2 + Math.random() * 3), stress: 10 },
+                        { type: 'dump', text: `🚨 DEV RUGGED $${randomCoin}! DUMPING!`, mult: 0.1, stress: 20 },
+                        { type: 'hack', text: `💀 EXCHANGE HACKED! ALL COINS DUMP 30%!`, mult: 0.7, global: true, stress: 25 },
+                        { type: 'airdrop', text: `🎁 AIRDROP RECIEVED! +100 $${randomCoin}`, airdrop: true, amt: 100, stress: -5 }
+                    ];
+                    
+                    const ev = events[Math.floor(Math.random() * events.length)];
+                    eventHeadline = ev.text;
+                    
+                    if(ev.airdrop) {
+                        state.inventory[randomCoin].amt += ev.amt;
+                        log(ev.text, true);
+                    } else if(ev.global) {
+                        for(let c in state.prices) {
+                            state.prices[c] *= ev.mult;
+                            state.history[c][state.history[c].length-1] = state.prices[c];
+                        }
+                        log(ev.text, true);
+                    } else {
+                        state.prices[randomCoin] *= ev.mult;
+                        state.history[randomCoin][state.history[randomCoin].length-1] = state.prices[randomCoin];
+                        log(ev.text, true);
+                    }
+                    state.stress = Math.min(100, Math.max(0, state.stress + ev.stress));
                 }
-                log(ev.text, true);
-                state.stress = Math.min(100, state.stress + 20); // More stress on events
             }
+            if(eventHeadline) updateTicker(eventHeadline);
+            else updateTicker(state.newsHeadlines[Math.floor(Math.random() * state.newsHeadlines.length)]);
         }
 
         function calculateNetWorth() {
             let nw = state.bnb + state.bank - state.loan;
-            for(let coin in state.inventory) {
-                nw += state.inventory[coin].amt * state.prices[coin];
-            }
+            for(let coin in state.inventory) nw += state.inventory[coin].amt * state.prices[coin];
             return nw;
+        }
+
+        function spawnFloatingText(text, colorClass, elementId) {
+            const el = document.getElementById(elementId);
+            if(!el) return;
+            const rect = el.getBoundingClientRect();
+            const floater = document.createElement('div');
+            floater.className = `float-text ${colorClass}`;
+            floater.innerText = text;
+            floater.style.left = `${rect.left + (rect.width/2)}px`;
+            floater.style.top = `${rect.top}px`;
+            document.body.appendChild(floater);
+            setTimeout(() => floater.remove(), 1500);
         }
 
         function render() {
@@ -265,6 +346,8 @@
             
             els.stress.style.width = state.stress + '%';
             els.stress.style.backgroundColor = state.stress > 75 ? '#FF003C' : (state.stress > 50 ? '#F0B90B' : '#39FF14');
+            if(state.stress > 80) els.stress.parentElement.classList.add('animate-pulse');
+            else els.stress.parentElement.classList.remove('animate-pulse');
 
             // Daily PnL
             let currentNW = calculateNetWorth();
@@ -272,66 +355,80 @@
             els.dailyPnl.innerText = (dailyPnl >= 0 ? '+' : '') + dailyPnl.toFixed(3);
             els.dailyPnl.className = dailyPnl >= 0 ? 'text-degenGreen font-bold' : 'text-degenRed font-bold';
 
-            // Inventory & PnL tracking
+            // Inventory Rendering
             els.inv.innerHTML = '';
             let hasInventory = false;
             for (let coin in state.inventory) {
                 const {amt, avgCost} = state.inventory[coin];
                 if (amt > 0) {
                     hasInventory = true;
-                    const currentPrice = state.prices[coin];
-                    const currentValue = amt * currentPrice;
+                    const currentValue = amt * state.prices[coin];
                     const totalCost = amt * avgCost;
                     const pnl = currentValue - totalCost;
                     const pnlPercent = totalCost > 0 ? (pnl / totalCost) * 100 : 0;
-                    
                     const colorClass = pnl >= 0 ? 'text-degenGreen' : 'text-degenRed';
-                    const sign = pnl >= 0 ? '+' : '';
 
                     els.inv.innerHTML += `
-                        <div class="flex justify-between items-center bg-gray-900 p-2 border border-gray-800 text-xs">
+                        <div class="flex justify-between items-center bg-gray-900 p-2 border border-gray-800 text-xs shadow-sm">
                             <div>
                                 <div class="font-bold text-white text-sm">$${coin} <span class="text-gray-400 font-normal text-xs ml-1">x${amt.toLocaleString()}</span></div>
-                                <div class="text-gray-500">Avg Buy: ${avgCost.toFixed(5)}</div>
+                                <div class="text-gray-500">Avg: ${avgCost.toFixed(5)}</div>
                             </div>
                             <div class="text-right">
                                 <div class="text-white font-bold">${currentValue.toFixed(3)} BNB</div>
-                                <div class="${colorClass} font-bold">${sign}${pnl.toFixed(3)} BNB (${sign}${pnlPercent.toFixed(1)}%)</div>
+                                <div class="${colorClass} font-bold">${pnl >= 0 ? '+' : ''}${pnl.toFixed(3)} (${pnl >= 0 ? '+' : ''}${pnlPercent.toFixed(1)}%)</div>
                             </div>
                         </div>`;
                 }
             }
-            if(!hasInventory) els.inv.innerHTML = '<div class="text-gray-600 text-xs text-center mt-4">Bag is empty. Buy something.</div>';
+            if(!hasInventory) els.inv.innerHTML = '<div class="text-gray-600 text-xs text-center p-4 border border-gray-800 border-dashed">Bag is empty. Ape into something.</div>';
             
+            // Debt Rendering
             if(state.loan > 0) {
                 els.debt.classList.remove('hidden');
-                els.btnPay.classList.remove('hidden');
-                els.debt.querySelector('span').innerText = state.loan.toFixed(3);
+                els.debtAmt.innerText = state.loan.toFixed(3);
             } else {
                 els.debt.classList.add('hidden');
-                els.btnPay.classList.add('hidden');
             }
 
-            // Market
+            // Market Rendering with Mini-Charts
             els.market.innerHTML = '';
             for (let coin in state.prices) {
                 const price = state.prices[coin];
                 const hist = state.history[coin];
                 const isUp = hist.length > 1 && hist[hist.length-1] >= hist[hist.length-2];
                 const color = isUp ? 'text-degenGreen' : 'text-degenRed';
-                const arrow = isUp ? '▲' : '▼';
                 
+                // Build Mini Chart HTML
+                let chartHTML = '<div class="flex items-end gap-[2px] h-8 mt-2 w-full justify-between opacity-80">';
+                const maxVal = Math.max(...hist);
+                hist.forEach((p, idx) => {
+                    const h = Math.max(10, (p / maxVal) * 100);
+                    const barColor = (idx === 0 || p >= hist[idx-1]) ? 'bg-degenGreen' : 'bg-degenRed';
+                    chartHTML += `<div class="flex-1 ${barColor} mini-bar" style="height: ${h}%"></div>`;
+                });
+                chartHTML += '</div>';
+
                 const maxBuyAmt = Math.floor(state.bnb / price);
+                const currentAmt = state.inventory[coin].amt;
                 
                 els.market.innerHTML += `
-                    <div class="border border-gray-800 bg-gray-900 p-3 flex flex-col gap-2 relative overflow-hidden">
-                        <div class="flex justify-between items-center">
-                            <div class="font-heavy text-lg text-white">$${coin}</div>
-                            <div class="font-mono text-sm ${color} font-bold">${arrow} ${price.toFixed(5)} BNB</div>
+                    <div id="card-${coin}" class="border border-gray-800 bg-gray-900 p-3 flex flex-col relative overflow-hidden brutal-border shadow-[2px_2px_0_#39FF14]">
+                        <div class="flex justify-between items-start mb-1">
+                            <div class="font-heavy text-xl text-white drop-shadow-[1px_1px_0_#000]">$${coin}</div>
+                            <div class="font-mono text-sm ${color} font-bold bg-black px-2 py-1 border border-gray-800">${price.toFixed(5)}</div>
                         </div>
-                        <div class="flex gap-2 h-10">
-                            <button onclick="buy('${coin}')" class="flex-1 brutal-btn text-white text-xs font-bold uppercase ${maxBuyAmt > 0 ? '' : 'opacity-30 cursor-not-allowed'}" ${maxBuyAmt > 0 ? '' : 'disabled'}>Buy Max <br><span class="text-[9px] text-gray-400 font-normal">~${maxBuyAmt.toLocaleString()}</span></button>
-                            <button onclick="sell('${coin}')" class="flex-1 brutal-btn text-white text-xs font-bold uppercase ${state.inventory[coin].amt > 0 ? '' : 'opacity-30 cursor-not-allowed'}" ${state.inventory[coin].amt > 0 ? '' : 'disabled'}>Sell All <br><span class="text-[9px] text-gray-400 font-normal">Have: ${state.inventory[coin].amt.toLocaleString()}</span></button>
+                        
+                        ${chartHTML}
+
+                        <div class="flex gap-1 items-center bg-black border border-gray-800 p-1 mb-2 mt-3">
+                            <input type="number" id="qty-${coin}" class="w-full bg-transparent text-white px-2 text-xs font-mono outline-none" placeholder="Amount" min="1">
+                            <button onclick="document.getElementById('qty-${coin}').value = ${maxBuyAmt}" class="text-[9px] bg-gray-800 px-2 py-1 text-degenGreen font-bold hover:bg-gray-700">MAX BUY</button>
+                            <button onclick="document.getElementById('qty-${coin}').value = ${currentAmt}" class="text-[9px] bg-gray-800 px-2 py-1 text-degenRed font-bold hover:bg-gray-700">MAX SELL</button>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="buy('${coin}')" class="flex-1 brutal-btn text-white text-xs font-bold py-2 hover:border-white">BUY</button>
+                            <button onclick="sell('${coin}')" class="flex-1 brutal-btn text-white text-xs font-bold py-2 hover:border-white">SELL</button>
                         </div>
                     </div>`;
             }
@@ -342,47 +439,81 @@
                 if (loc !== state.location) {
                     const isGrass = loc === 'Touch Grass';
                     els.locs.innerHTML += `
-                        <button onclick="travel('${loc}')" class="flex-1 bg-gray-900 text-gray-300 font-bold py-3 border border-gray-800 hover:border-degenGreen uppercase text-[10px] sm:text-xs truncate px-1 ${isGrass ? 'text-green-400 border-green-900' : ''}">
+                        <button onclick="travel('${loc}')" class="flex-1 bg-gray-900 text-gray-300 font-bold py-3 border border-gray-800 hover:border-degenGreen hover:text-white uppercase text-[10px] sm:text-xs truncate px-2 transition-colors ${isGrass ? 'text-green-400 border-green-900' : ''}">
                             ${loc}
                         </button>`;
                 }
             });
             
-            // Check End Conditions
+            // End Conditions
             if(state.stress >= 100) endGame("Heart Attack from 100x Leverage! You died.", true);
             else if (state.day > state.maxDays) endGame();
         }
 
         function buy(coin) {
+            const input = document.getElementById(`qty-${coin}`);
+            let amount = parseInt(input.value);
+            if (isNaN(amount) || amount <= 0) return log(`Enter valid amount of $${coin}.`, true);
+            
             const price = state.prices[coin];
-            const amount = Math.floor(state.bnb / price);
-            if (amount > 0) {
-                const totalCost = amount * price;
-                state.bnb -= totalCost;
-                
-                // Calculate new average cost
-                const inv = state.inventory[coin];
-                const oldTotalCost = inv.amt * inv.avgCost;
-                inv.amt += amount;
-                inv.avgCost = (oldTotalCost + totalCost) / inv.amt;
-                
-                state.stress = Math.min(100, state.stress + (state.volatility[coin] * 5)); 
-                log(`Bought ${amount.toLocaleString()} $${coin}`);
-                render();
+            const maxBuyAmt = Math.floor(state.bnb / price);
+            if (amount > maxBuyAmt) {
+                amount = maxBuyAmt;
+                if(amount <= 0) return log("Insufficient BNB.", true);
             }
+            
+            const totalCost = amount * price;
+            state.bnb -= totalCost;
+            
+            const inv = state.inventory[coin];
+            const oldTotalCost = inv.amt * inv.avgCost;
+            inv.amt += amount;
+            inv.avgCost = (oldTotalCost + totalCost) / inv.amt;
+            
+            state.stress = Math.min(100, state.stress + (state.volatility[coin] * 6)); 
+            log(`Bought ${amount.toLocaleString()} $${coin} for ${totalCost.toFixed(3)} BNB`);
+            spawnFloatingText(`-${totalCost.toFixed(3)} BNB`, 'text-degenRed', `card-${coin}`);
+            
+            input.value = '';
+            render();
         }
 
         function sell(coin) {
-            const amount = state.inventory[coin].amt;
-            if (amount > 0) {
-                const revenue = amount * state.prices[coin];
-                state.bnb += revenue;
-                
-                state.inventory[coin].amt = 0;
-                state.inventory[coin].avgCost = 0;
-                
-                log(`Sold $${coin} for ${revenue.toFixed(3)} BNB`);
+            const input = document.getElementById(`qty-${coin}`);
+            let amount = parseInt(input.value);
+            if (isNaN(amount) || amount <= 0) return log(`Enter valid amount of $${coin}.`, true);
+
+            const currentAmt = state.inventory[coin].amt;
+            if (amount > currentAmt) amount = currentAmt;
+            if (amount <= 0) return;
+            
+            const revenue = amount * state.prices[coin];
+            const costBasis = amount * state.inventory[coin].avgCost;
+            const pnl = revenue - costBasis;
+            
+            state.bnb += revenue;
+            state.inventory[coin].amt -= amount;
+            if (state.inventory[coin].amt === 0) state.inventory[coin].avgCost = 0;
+            
+            log(`Sold ${amount.toLocaleString()} $${coin} for ${revenue.toFixed(3)} BNB`);
+            
+            // Visual floating feedback
+            const pnlColor = pnl >= 0 ? 'text-degenGreen' : 'text-degenRed';
+            const pnlSign = pnl >= 0 ? '+' : '';
+            spawnFloatingText(`${pnlSign}${pnl.toFixed(3)} BNB`, pnlColor, `card-${coin}`);
+            
+            input.value = '';
+            render();
+        }
+
+        function buyPill() {
+            if(state.bnb >= 0.25) {
+                state.bnb -= 0.25;
+                state.stress = Math.max(0, state.stress - 30);
+                log("Took a Chill Pill. Stress -30%.", true);
                 render();
+            } else {
+                log("Not enough BNB to buy pills.", true);
             }
         }
 
@@ -390,11 +521,11 @@
             if(type === 'deposit' && state.bnb > 0) {
                 state.bank += state.bnb;
                 state.bnb = 0;
-                log("Deposited into staking protocol.");
+                log("Deposited BNB into yield protocol.");
             } else if(type === 'withdraw' && state.bank > 0) {
                 state.bnb += state.bank;
                 state.bank = 0;
-                log("Withdrew from staking protocol.");
+                log("Withdrew from yield protocol.");
             }
             render();
         }
@@ -406,21 +537,24 @@
                 state.loan = 0;
                 render();
             } else {
-                log("Not enough BNB in wallet to pay loan.");
+                log("Not enough BNB in wallet to pay loan.", true);
             }
         }
 
         function travel(newLoc) {
-            state.lastNetWorth = calculateNetWorth(); // Snapshot before day change
+            state.lastNetWorth = calculateNetWorth(); // Snapshot for daily PnL
             state.location = newLoc;
             state.day++;
             
-            if(state.loan > 0) state.loan *= 1.15; // 15% daily interest
-            if(state.bank > 0) state.bank *= 1.05; // 5% daily yield
+            // Cartel gets angry if debt remains long
+            let interestRate = state.day > 15 ? 1.25 : 1.15; // Interest spikes after 15 days
+            
+            if(state.loan > 0) state.loan *= interestRate; 
+            if(state.bank > 0) state.bank *= 1.05; // 5% yield
             
             if(newLoc === 'Touch Grass') {
                 state.stress = 0;
-                log(`You touched grass. Stress reset to 0.`, true);
+                log(`You touched grass. Stress reset to 0. You lost a day of trading.`, true);
             } else {
                 log(`Traveled to ${newLoc}.`);
             }
@@ -440,14 +574,15 @@
             if(died) {
                 document.getElementById('go-title').innerText = "REKT";
                 document.getElementById('go-title').className = "text-5xl font-heavy text-degenRed mb-4 uppercase";
-                document.getElementById('final-bnb').className = "text-4xl text-degenRed font-heavy mb-6 block";
+                document.getElementById('final-bnb').className = "text-4xl text-degenRed font-heavy mb-6 block drop-shadow-[2px_2px_0_#000]";
                 document.getElementById('game-over-msg').innerText = customMsg;
             } else {
                 let msg = "";
                 if(finalWorth < 0) msg = "The Cartel found you. You owe them more than you started with. You're liquidated in real life. NGMI.";
-                else if(finalWorth < 5) msg = "You survived, but barely beat the interest rates. Still working the fryer at Wendy's. Jeet.";
-                else if(finalWorth < 50) msg = "Solid bags. You can afford a used Honda Civic and a new gaming chair.";
-                else msg = "Absolute Whale. You beat the system. Enjoy the neon Lambo. WAGMI.";
+                else if(finalWorth < 5) msg = "You survived, but barely beat the interest rates. Rank: McDonald's Fry Cook. Jeet.";
+                else if(finalWorth < 50) msg = "Solid bags. You beat the system. Rank: Crypto Twitter Reply Guy.";
+                else if(finalWorth < 200) msg = "Whale Alert! You printed money. Rank: Discord Alpha Caller.";
+                else msg = "ABSOLUTE GOD CANDLE. You broke the simulation. Enjoy the neon Lambo in Dubai. WAGMI.";
                 document.getElementById('game-over-msg').innerText = msg;
             }
         }
