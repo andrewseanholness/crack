@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Catch The Jeets | $CRACK</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            background-color: #0A0F11; color: #fff; margin: 0; overflow: hidden; 
+            font-family: 'Archivo Black', sans-serif; user-select: none; touch-action: none; 
+        }
+        canvas { display: block; cursor: crosshair; }
+        .ui-layer { position: absolute; inset: 0; pointer-events: none; display: flex; flex-direction: column; padding: 15px;}
+        .brutal-border { border: 4px solid #39FF14; box-shadow: inset 0 0 40px rgba(57,255,20,0.1); }
+        .bomb-btn { pointer-events: auto; transform: scale(1); transition: transform 0.1s; box-shadow: 4px 4px 0px #fff; }
+        .bomb-btn:active { transform: scale(0.95); box-shadow: 0px 0px 0px #fff; }
+        .bomb-btn:disabled { opacity: 0.5; filter: grayscale(1); pointer-events: none; box-shadow: none;}
+        #game-over, #start-screen { pointer-events: auto; background: rgba(10, 15, 17, 0.95); }
+        
+        .shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-2px, 2px, 0); }
+            20%, 80% { transform: translate3d(4px, -4px, 0); }
+            30%, 50%, 70% { transform: translate3d(-8px, 6px, 0); }
+            40%, 60% { transform: translate3d(8px, -6px, 0); }
+        }
+        
+        /* Scanline effect */
+        .scanlines::before {
+            content: " "; display: block; position: absolute; top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 10; background-size: 100% 4px, 3px 100%; pointer-events: none;
+        }
+    </style>
+</head>
+<body class="brutal-border scanlines" id="body">
+
+    <canvas id="gameCanvas"></canvas>
+
+    <div class="ui-layer z-20">
+        <div class="flex justify-between items-start w-full">
+            <div class="bg-black/80 p-2 border-2 border-[#39FF14]">
+                <h1 class="text-xl sm:text-3xl text-[#39FF14] tracking-tighter drop-shadow-[2px_2px_0_#000]">DEFEND THE CANDLE</h1>
+                <p class="text-lg sm:text-xl">MCAP: $<span id="score" class="text-white">0</span></p>
+                <p class="text-sm sm:text-md text-[#39FF14]">COMBO: x<span id="combo">1</span></p>
+            </div>
+            
+            <div class="text-right bg-black/80 p-2 border-2 border-white">
+                <div class="text-sm sm:text-xl mb-1 uppercase">Candle Health:</div>
+                <div class="w-32 sm:w-48 h-4 sm:h-6 border-2 border-white bg-black">
+                    <div id="health-bar" class="h-full bg-[#39FF14] transition-all duration-200" style="width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-auto flex justify-center pb-4">
+            <button id="bomb-btn" class="bomb-btn bg-[#FF003C] text-white text-xl sm:text-2xl px-6 py-3 sm:px-8 sm:py-4 border-4 border-white font-bold tracking-widest hidden uppercase">
+                Ape In (Smart Bomb)
+            </button>
+        </div>
+    </div>
+
+    <div id="start-screen" class="fixed inset-0 flex flex-col items-center justify-center z-50 p-4 text-center">
+        <h2 class="text-5xl sm:text-7xl text-[#39FF14] mb-4 drop-shadow-[4px_4px_0_#000] uppercase text-stroke font-heavy">Catch The Jeets</h2>
+        <div class="bg-black border-4 border-[#39FF14] p-4 sm:p-6 max-w-xl text-left mb-8 shadow-[8px_8px_0_#39FF14]">
+            <h3 class="text-2xl text-white mb-2 uppercase font-bold">Rules of Engagement:</h3>
+            <ul class="text-gray-300 text-sm sm:text-base space-y-2 mb-4 font-sans list-disc list-inside">
+                <li>Defend the giant green <span class="text-[#39FF14] font-bold">God Candle</span> in the center.</li>
+                <li>Tap/Click the incoming Jeets before they touch the candle and dump your chart.</li>
+                <li>If the candle health hits 0, you get <span class="text-[#FF003C] font-bold">RUG PULLED</span> (Game Over).</li>
+                <li>Build your COMBO by hitting targets without missing. Misses reset combo to 1x.</li>
+                <li>Use the <span class="text-[#FF003C] font-bold">SMART BOMB</span> when overwhelmed (appears every $2k MCAP).</li>
+            </ul>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm text-white font-sans mt-4">
+                <div class="bg-gray-900 p-2 border border-gray-700">🐻 <strong>Jeet:</strong> 1 Hit</div>
+                <div class="bg-gray-900 p-2 border border-[#00f]">🤖 <strong>Sniper:</strong> 1 Hit, Fast</div>
+                <div class="bg-gray-900 p-2 border border-[#f0f]">🐳 <strong>Whale:</strong> 3 Hits, Tank</div>
+            </div>
+        </div>
+        <button id="start-btn" class="bg-[#39FF14] text-black text-2xl sm:text-3xl px-8 py-4 border-4 border-black hover:bg-white transition-colors cursor-pointer pointer-events-auto shadow-[4px_4px_0_#fff] uppercase font-heavy">Start Pump</button>
+    </div>
+
+    <div id="game-over" class="fixed inset-0 hidden flex-col items-center justify-center z-50 p-4 text-center">
+        <h2 class="text-5xl sm:text-7xl text-[#FF003C] mb-4 drop-shadow-[4px_4px_0_#000] uppercase">RUG PULLED</h2>
+        <p class="text-xl sm:text-3xl mb-2 text-white">Final MCAP: $<span id="final-score" class="text-[#39FF14]"></span></p>
+        <p class="text-lg text-gray-400 mb-8 font-sans">The Jeets won. The candle is dead.</p>
+        <button onclick="location.reload()" class="bg-white text-black text-2xl sm:text-3xl px-8 py-4 border-4 border-black hover:bg-gray-200 transition-colors cursor-pointer pointer-events-auto shadow-[4px_4px_0_#FF003C]">BUY THE DIP (RETRY)</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d', { alpha: false }); // Optimize
+        let width, height, centerX, centerY;
+        let dpr = window.devicePixelRatio || 1;
+        
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            ctx.scale(dpr, dpr);
+            canvas.style.width = width + 'px';
+            canvas.style.height = height + 'px';
+            centerX = width / 2;
+            centerY = height / 2;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        let state = { running: false, score: 0, health: 100, frame: 0, combo: 1 };
+        const candle = { w: Math.min(60, width*0.15), h: Math.min(300, height*0.5) };
+        const enemies = [];
+        const particles = [];
+        const bombBtn = document.getElementById('bomb-btn');
+        let bgOffset = 0;
+
+        class Enemy {
+            constructor() {
+                const edge = Math.floor(Math.random() * 4);
+                if(edge === 0) { this.x = Math.random() * width; this.y = -50; } // top
+                else if(edge === 1) { this.x = width + 50; this.y = Math.random() * height; } // right
+                else if(edge === 2) { this.x = Math.random() * width; this.y = height + 50; } // bottom
+                else { this.x = -50; this.y = Math.random() * height; } // left
+
+                // Determine Type
+                const rand = Math.random();
+                if(rand > 0.85) { this.type = 'bot'; this.hp = 1; this.speedMult = 2.5; this.size = 20; this.icon = "🤖"; }
+                else if(rand > 0.70) { this.type = 'whale'; this.hp = 3; this.speedMult = 0.6; this.size = 40; this.icon = "🐳"; }
+                else { this.type = 'jeet'; this.hp = 1; this.speedMult = 1; this.size = 30; this.icon = "🐻"; }
+
+                const dx = centerX - this.x;
+                const dy = centerY - this.y;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                const baseSpeed = 1 + (state.score * 0.0005);
+                
+                this.vx = (dx / dist) * baseSpeed * this.speedMult;
+                this.vy = (dy / dist) * baseSpeed * this.speedMult;
+                this.markedForDeletion = false;
+                this.hitTime = 0;
+            }
+            
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if(this.hitTime > 0) this.hitTime--;
+                
+                // Hit center candle
+                if(Math.abs(this.x - centerX) < candle.w/2 + this.size/2 && Math.abs(this.y - centerY) < candle.h/2 + this.size/2) {
+                    this.markedForDeletion = true;
+                    state.health -= (this.type === 'whale' ? 20 : 10);
+                    state.combo = 1; // Reset combo on hit
+                    document.getElementById('combo').innerText = state.combo;
+                    createParticles(centerX, centerY, '#FF003C', 30);
+                    updateHealth();
+                    document.getElementById('body').classList.add('shake');
+                    setTimeout(() => document.getElementById('body').classList.remove('shake'), 400);
+                }
+            }
+            
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                if(this.hitTime > 0) {
+                    ctx.filter = 'brightness(200%) sepia(100%) hue-rotate(300deg) saturate(500%)'; // Flash red
+                }
+                ctx.font = `${this.size}px sans-serif`;
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = this.type === 'bot' ? '#00f' : (this.type === 'whale' ? '#f0f' : '#fff');
+                ctx.fillText(this.icon, 0, 0);
+                
+                // HP Bar for Whale
+                if(this.type === 'whale' && this.hp < 3) {
+                    ctx.fillStyle = '#fff';
+                    ctx.fillRect(-15, -25, 30, 4);
+                    ctx.fillStyle = '#FF003C';
+                    ctx.fillRect(-15, -25, 10 * this.hp, 4);
+                }
+                ctx.restore();
+            }
+        }
+
+        class Particle {
+            constructor(x, y, color, speed = 1) {
+                this.x = x; this.y = y; this.color = color;
+                const angle = Math.random() * Math.PI * 2;
+                const vel = (Math.random() * 5 + 2) * speed;
+                this.vx = Math.cos(angle) * vel;
+                this.vy = Math.sin(angle) * vel;
+                this.life = 1;
+                this.decay = Math.random() * 0.05 + 0.02;
+                this.size = Math.random() * 4 + 2;
+            }
+            update() {
+                this.x += this.vx; this.y += this.vy; this.life -= this.decay;
+            }
+            draw() {
+                ctx.globalAlpha = Math.max(0, this.life);
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+                ctx.fill();
+                ctx.globalAlpha = 1;
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        function createParticles(x, y, color, count=15, speed=1) {
+            for(let i=0; i<count; i++) particles.push(new Particle(x, y, color, speed));
+        }
+
+        function updateHealth() {
+            const bar = document.getElementById('health-bar');
+            bar.style.width = Math.max(0, state.health) + '%';
+            if(state.health <= 40) bar.style.backgroundColor = '#FF003C';
+            if(state.health <= 0) gameOver();
+        }
+
+        function gameOver() {
+            state.running = false;
+            document.getElementById('game-over').classList.remove('hidden');
+            document.getElementById('game-over').classList.add('flex');
+            document.getElementById('final-score').innerText = state.score.toLocaleString();
+        }
+
+        function handleHit(clickX, clickY) {
+            if(!state.running) return;
+            let hitAnything = false;
+
+            // Sort enemies so smaller ones (bots) are hit first if overlapping
+            enemies.sort((a, b) => a.size - b.size); 
+
+            for(let i=0; i<enemies.length; i++) {
+                let en = enemies[i];
+                const dx = en.x - clickX;
+                const dy = en.y - clickY;
+                // Touch targets are slightly forgiving
+                if(Math.sqrt(dx*dx + dy*dy) < en.size/2 + 25) { 
+                    en.hp--;
+                    en.hitTime = 5;
+                    hitAnything = true;
+                    
+                    if(en.hp <= 0) {
+                        en.markedForDeletion = true;
+                        const points = (en.type === 'whale' ? 500 : (en.type === 'bot' ? 200 : 100)) * state.combo;
+                        state.score += points;
+                        document.getElementById('score').innerText = state.score.toLocaleString();
+                        createParticles(en.x, en.y, '#39FF14');
+                        
+                        // Spawn floating text
+                        particles.push({
+                            x: en.x, y: en.y, life: 1, decay: 0.02,
+                            update: function() { this.y -= 1; this.life -= this.decay; },
+                            draw: function() { 
+                                ctx.globalAlpha = Math.max(0, this.life);
+                                ctx.fillStyle = '#39FF14'; ctx.font = "bold 16px sans-serif";
+                                ctx.fillText("+"+points, this.x, this.y);
+                                ctx.globalAlpha = 1;
+                            }
+                        });
+                        
+                        state.combo = Math.min(state.combo + 1, 10); // Max 10x combo
+                        document.getElementById('combo').innerText = state.combo;
+
+                        if(state.score % 2000 < 500 && state.score > 1000) { // Approx every 2k
+                            bombBtn.classList.remove('hidden');
+                            bombBtn.disabled = false;
+                        }
+                    } else {
+                        createParticles(en.x, en.y, '#fff', 5, 0.5); // chip damage
+                    }
+                    break; // Only hit one enemy per click/tap
+                }
+            }
+
+            if(!hitAnything) {
+                state.combo = 1; // Miss resets combo
+                document.getElementById('combo').innerText = state.combo;
+                createParticles(clickX, clickY, 'rgba(255,255,255,0.5)', 5, 0.5);
+            }
+        }
+
+        // Mouse/Touch Event Listeners
+        canvas.addEventListener('mousedown', (e) => handleHit(e.clientX, e.clientY));
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            for(let i=0; i<e.changedTouches.length; i++) {
+                handleHit(e.changedTouches[i].clientX, e.changedTouches[i].clientY);
+            }
+        }, {passive: false});
+
+        // Smart Bomb
+        bombBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if(!state.running || bombBtn.disabled) return;
+            enemies.forEach(en => {
+                en.markedForDeletion = true;
+                state.score += 50 * state.combo; 
+                createParticles(en.x, en.y, '#39FF14', 20);
+            });
+            document.getElementById('score').innerText = state.score.toLocaleString();
+            bombBtn.disabled = true;
+            bombBtn.classList.add('hidden');
+            
+            // Screen flash effect
+            ctx.fillStyle = '#39FF14';
+            ctx.fillRect(0,0,width,height);
+            document.getElementById('body').classList.add('shake');
+            setTimeout(() => document.getElementById('body').classList.remove('shake'), 400);
+        });
+
+        function gameLoop() {
+            if(!state.running) return;
+            
+            // Background Clear & Grid
+            ctx.fillStyle = '#0A0F11';
+            ctx.fillRect(0, 0, width, height);
+            
+            ctx.strokeStyle = 'rgba(57, 255, 20, 0.05)';
+            ctx.lineWidth = 1;
+            bgOffset = (bgOffset + 0.5) % 40;
+            ctx.beginPath();
+            for(let x=bgOffset; x<width; x+=40) { ctx.moveTo(x,0); ctx.lineTo(x,height); }
+            for(let y=bgOffset; y<height; y+=40) { ctx.moveTo(0,y); ctx.lineTo(width,y); }
+            ctx.stroke();
+
+            // Draw Center Candle
+            const cHeight = candle.h * (state.health/100);
+            const cColor = state.health > 40 ? '#39FF14' : '#FF003C';
+            
+            ctx.shadowBlur = 20;
+            ctx.shadowColor = cColor;
+            ctx.fillStyle = cColor;
+            
+            // Body
+            ctx.fillRect(centerX - candle.w/2, centerY - cHeight/2, candle.w, cHeight);
+            // Wick
+            ctx.fillRect(centerX - 2, centerY - candle.h/2 - 20, 4, candle.h + 40);
+            ctx.shadowBlur = 0; // reset
+
+            // Spawning
+            let spawnRate = Math.max(15, 60 - Math.floor(state.score / 1000));
+            if(state.frame % spawnRate === 0) enemies.push(new Enemy());
+
+            // Update & Draw
+            [...enemies, ...particles].forEach(obj => {
+                obj.update();
+                obj.draw();
+            });
+
+            // Cleanup
+            for(let i = enemies.length - 1; i >= 0; i--) if(enemies[i].markedForDeletion) enemies.splice(i, 1);
+            for(let i = particles.length - 1; i >= 0; i--) if(particles[i].life <= 0) particles.splice(i, 1);
+
+            state.frame++;
+            requestAnimationFrame(gameLoop);
+        }
+
+        document.getElementById('start-btn').addEventListener('click', () => {
+            document.getElementById('start-screen').classList.add('hidden');
+            state.running = true;
+            gameLoop();
+        });
+    </script>
+</body>
+</html>
