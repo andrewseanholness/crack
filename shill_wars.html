@@ -164,10 +164,10 @@
             </div>
         </main>
 
-        <footer class="bg-black border-t-2 border-degenGreen p-2 sm:p-3 shrink-0 absolute sm:relative bottom-0 left-0 w-full z-20">
-            <div class="flex flex-col sm:flex-row justify-between items-center gap-2">
-                <span class="text-gray-500 text-xs uppercase font-bold text-center sm:text-left">Travel (Day ++):</span>
-                <div id="ui-locations" class="grid grid-cols-3 sm:flex flex-wrap gap-2 justify-center sm:justify-end w-full sm:w-auto">
+        <footer class="bg-black border-t-2 border-degenGreen p-3 shrink-0 absolute sm:relative bottom-0 left-0 w-full z-20">
+            <div class="flex flex-col items-center gap-2 w-full max-w-5xl mx-auto">
+                <span class="text-degenGreen text-xs uppercase font-bold text-center animate-pulse">>>> SELECT PLATFORM TO TRAVEL & ADVANCE DAY <<<</span>
+                <div id="ui-locations" class="flex flex-wrap gap-2 justify-center w-full">
                     <!-- Travel buttons injected here -->
                 </div>
             </div>
@@ -201,7 +201,7 @@
             basePrices: { 'CRACK': 0.05, 'PEPE': 0.001, 'DOGE': 0.15, 'WIF': 2.50, 'POPCAT': 0.50 },
             volatility: { 'CRACK': 0.9, 'PEPE': 0.6, 'DOGE': 0.2, 'WIF': 0.5, 'POPCAT': 0.7 },
             history: { 'CRACK': [], 'PEPE': [], 'DOGE': [], 'WIF': [], 'POPCAT': [] },
-            locations: ['Twitter', 'Telegram', 'Discord', '4Chan', 'Touch Grass'],
+            locations: ['Twitter', 'Telegram', 'Discord', '4Chan', 'Reddit', 'YouTube', 'Touch Grass'],
             newsHeadlines: [
                 "MARKET CHOPPY, DEGENS SWEAT", "SEC INVESTIGATES EVERYTHING", "NEW SHITCOIN LAUNCHES EVERY SECOND", 
                 "GAS FEES HIT NEW HIGHS", "WHALES MOVING MILLIONS", "INFLUENCER APOLOGIZES FOR RUG PULL"
@@ -439,8 +439,8 @@
                 if (loc !== state.location) {
                     const isGrass = loc === 'Touch Grass';
                     els.locs.innerHTML += `
-                        <button onclick="travel('${loc}')" class="flex-1 bg-gray-900 text-gray-300 font-bold py-3 border border-gray-800 hover:border-degenGreen hover:text-white uppercase text-[10px] sm:text-xs truncate px-2 transition-colors ${isGrass ? 'text-green-400 border-green-900' : ''}">
-                            ${loc}
+                        <button onclick="travel('${loc}')" class="flex-1 min-w-[80px] sm:min-w-[100px] bg-gray-900 text-gray-300 font-bold py-2 sm:py-3 border border-gray-800 hover:border-degenGreen hover:text-white hover:bg-black uppercase text-[10px] sm:text-xs px-2 transition-colors break-words leading-tight ${isGrass ? 'text-green-400 border-green-900' : ''}">
+                            ✈️ ${loc}
                         </button>`;
                 }
             });
