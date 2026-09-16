@@ -94,10 +94,17 @@
         <div class="text-4xl sm:text-5xl font-heavy tracking-tighter text-degenGreen">$CRACK</div>
         <div class="flex flex-wrap justify-center gap-2 sm:gap-6">
             <a href="#about" class="font-bold text-lg sm:text-xl text-white hover:text-degenGreen transition-colors">THE HIGH</a>
+            <a href="#chart" class="font-bold text-lg sm:text-xl text-white hover:text-degenGreen transition-colors">CHART</a>
             <a href="#tokenomics" class="font-bold text-lg sm:text-xl text-white hover:text-degenGreen transition-colors">THE BAG</a>
+            <a href="#meme-lab" class="font-bold text-lg sm:text-xl text-white hover:text-degenGreen transition-colors">MEME LAB</a>
             <a href="#how-to-buy" class="font-bold text-lg sm:text-xl text-white hover:text-degenGreen transition-colors">GET YOUR FIX</a>
         </div>
-        <button class="bg-degenGreen text-black brutal-border border-degenGreen font-heavy text-xl sm:text-2xl px-6 py-2 shake shadow-none">APE IN NOW</button>
+        <div class="flex gap-4">
+            <button id="degen-mode-btn" class="bg-black text-degenRed brutal-border border-degenRed font-heavy text-lg px-4 py-2 hover:bg-degenRed hover:text-black transition-colors shadow-none uppercase flex items-center gap-2">
+                <span class="animate-pulse">⚠️</span> Degen Mode
+            </button>
+            <button class="bg-degenGreen text-black brutal-border border-degenGreen font-heavy text-xl sm:text-2xl px-6 py-2 shake shadow-none">APE IN NOW</button>
+        </div>
     </nav>
 
     <main>
@@ -133,6 +140,39 @@
 
                 <div class="w-full max-w-4xl mt-16 border-4 border-degenGreen brutal-border relative min-h-[300px] sm:min-h-[500px] flex items-center justify-center tilt-right z-10 overflow-hidden bg-black p-0">
                     <img src="https://andrewseanholness.github.io/crack/crackrock.jpg" alt="The Rush" class="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW: LIVE CHART SECTION -->
+        <section id="chart" class="py-16 sm:py-24 px-4 bg-black border-b-4 border-degenGreen relative overflow-hidden">
+            <div class="max-w-6xl mx-auto flex flex-col items-center">
+                <div class="text-center mb-8 w-full flex flex-col md:flex-row justify-between items-end gap-6">
+                    <div class="text-left">
+                        <div class="bg-degenGreen text-black font-bold text-lg px-4 py-1 uppercase mb-4 inline-block brutal-border border-black shadow-none tilt-left">
+                            LIVE FEED
+                        </div>
+                        <h2 class="text-5xl sm:text-6xl font-heavy uppercase leading-none text-white drop-shadow-[2px_2px_0_#39FF14]">The God Candle</h2>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="bg-degenDark border-2 border-degenGreen p-4 brutal-border">
+                            <div class="text-gray-400 font-bold uppercase text-sm mb-1">MARKET CAP</div>
+                            <div class="text-degenGreen font-heavy text-2xl sm:text-3xl animate-pulse">TBA</div>
+                        </div>
+                        <div class="bg-degenDark border-2 border-white p-4 brutal-border-white tilt-right">
+                            <div class="text-gray-400 font-bold uppercase text-sm mb-1">24H VOL</div>
+                            <div class="text-white font-heavy text-2xl sm:text-3xl">TBA</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- DEXSCREENER PLACEHOLDER -->
+                <div class="w-full h-[500px] sm:h-[700px] bg-degenDark border-4 border-degenGreen brutal-border p-2 sm:p-4 flex flex-col items-center justify-center text-center relative z-10">
+                    <div class="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjMDAwIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiMzOUZGMTQiPjwvcmVjdD4KPC9zdmc+')] pointer-events-none"></div>
+                    <span class="text-7xl mb-4">📈</span>
+                    <h3 class="text-3xl sm:text-4xl font-heavy text-white mb-2 uppercase text-stroke">Chart Loading...</h3>
+                    <p class="text-degenGreen font-bold text-lg max-w-md">DexScreener embed will be placed here immediately after launch.</p>
+                    <p class="text-gray-500 font-bold mt-4 uppercase text-sm">(Insert iframe here)</p>
                 </div>
             </div>
         </section>
@@ -363,6 +403,38 @@
             </div>
         </section>
 
+        <!-- NEW: THE MEME LAB -->
+        <section id="meme-lab" class="py-16 sm:py-24 px-4 bg-degenDark border-b-4 border-degenGreen relative overflow-hidden">
+            <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-5xl sm:text-7xl font-heavy uppercase mb-6 text-white drop-shadow-[4px_4px_0_#39FF14]">The Meme Lab</h2>
+                    <div class="border-l-8 border-degenGreen pl-6 mb-8">
+                        <p class="text-xl font-bold text-gray-300">
+                            We supply the product, you push it to the streets. Upload any image, apply the pure Degen Filter, and raid Crypto Twitter like a true Cartel member.
+                        </p>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <label class="block w-full bg-degenGreen text-black font-heavy text-2xl py-4 text-center border-4 border-black brutal-border cursor-pointer hover:bg-white transition-colors uppercase tilt-right">
+                            1. Upload Target Image
+                            <input type="file" id="meme-upload" accept="image/*" class="hidden">
+                        </label>
+                        <button id="meme-download" class="w-full bg-black text-degenGreen font-heavy text-2xl py-4 border-4 border-degenGreen brutal-border hover:bg-gray-900 transition-colors uppercase tilt-left opacity-50 cursor-not-allowed" disabled>
+                            2. Download Propaganda
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Generator Canvas Area -->
+                <div class="bg-black border-4 border-white brutal-border-white p-4 tilt-left">
+                    <div class="relative w-full aspect-square bg-gray-900 border-2 border-dashed border-gray-700 flex items-center justify-center overflow-hidden" id="canvas-container">
+                        <span class="text-gray-500 font-bold uppercase z-0 text-center px-4">Upload an image to generate meme</span>
+                        <canvas id="meme-canvas" class="absolute inset-0 w-full h-full object-contain hidden z-10"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="community" class="py-16 sm:py-24 px-4 bg-black border-b-4 border-degenGreen">
             <div class="max-w-6xl mx-auto flex flex-col items-center text-center">
                 <h2 class="text-5xl sm:text-6xl md:text-[8rem] font-heavy uppercase leading-none mb-6 break-words text-white">Join The <br><span class="text-stroke">Cartel</span></h2>
@@ -468,6 +540,146 @@
                 document.body.style.overflow = 'auto'; // Restore scrolling
             }, 300);
         }
+
+        const memeUpload = document.getElementById('meme-upload');
+        const memeCanvas = document.getElementById('meme-canvas');
+        const memeDownload = document.getElementById('meme-download');
+        const ctx = memeCanvas.getContext('2d');
+        let currentImage = null;
+
+        memeUpload.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    currentImage = img;
+                    drawMeme();
+                    memeCanvas.classList.remove('hidden');
+                    memeDownload.disabled = false;
+                    memeDownload.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+                img.src = event.target.result;
+            }
+            reader.readAsDataURL(file);
+        });
+
+        function drawMeme() {
+            if (!currentImage) return;
+            
+            // Set canvas size to square (or match image aspect ratio if preferred)
+            const size = Math.min(currentImage.width, currentImage.height, 1080);
+            memeCanvas.width = size;
+            memeCanvas.height = size;
+
+            // Draw original image (cropped to center square)
+            const startX = (currentImage.width - size) / 2;
+            const startY = (currentImage.height - size) / 2;
+            ctx.drawImage(currentImage, startX, startY, size, size, 0, 0, size, size);
+
+            // Apply Degen Filter (Neon Green Multiply)
+            ctx.fillStyle = '#39FF14';
+            ctx.globalCompositeOperation = 'multiply';
+            ctx.fillRect(0, 0, size, size);
+            
+            // Apply slight contrast/darkening
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.fillRect(0, 0, size, size);
+
+            // Add $CRACK Watermark
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = `900 ${size * 0.15}px 'Archivo Black', sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            // Black stroke
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = size * 0.02;
+            ctx.strokeText('$CRACK', size / 2, size * 0.85);
+            ctx.fillText('$CRACK', size / 2, size * 0.85);
+
+            // Top text
+            ctx.font = `900 ${size * 0.08}px 'Archivo Black', sans-serif`;
+            ctx.strokeText('POV: YOU BOUGHT', size / 2, size * 0.15);
+            ctx.fillText('POV: YOU BOUGHT', size / 2, size * 0.15);
+        }
+
+        memeDownload.addEventListener('click', function() {
+            if (!currentImage) return;
+            const link = document.createElement('a');
+            link.download = 'crack_propaganda.png';
+            link.href = memeCanvas.toDataURL('image/png');
+            link.click();
+        });
+
+        const degenBtn = document.getElementById('degen-mode-btn');
+        let audioCtx = null;
+        let degenInterval = null;
+        let isDegenActive = false;
+
+        function playHeartbeat() {
+            if (!audioCtx) return;
+            
+            // Synthesize a heavy, muffled "thump"
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            const filter = audioCtx.createBiquadFilter();
+
+            osc.type = 'sine';
+            filter.type = 'lowpass';
+            filter.frequency.value = 150; // Muffled heart sound
+
+            osc.connect(filter);
+            filter.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            const now = audioCtx.currentTime;
+            
+            // Frequency drop for "thud"
+            osc.frequency.setValueAtTime(60, now);
+            osc.frequency.exponentialRampToValueAtTime(30, now + 0.1);
+
+            // Volume envelope
+            gainNode.gain.setValueAtTime(0, now);
+            gainNode.gain.linearRampToValueAtTime(1, now + 0.02);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+
+            osc.start(now);
+            osc.stop(now + 0.2);
+        }
+
+        degenBtn.addEventListener('click', () => {
+            if (!isDegenActive) {
+                // Initialize Audio Context on user gesture
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                isDegenActive = true;
+                degenBtn.classList.replace('bg-black', 'bg-degenRed');
+                degenBtn.classList.replace('text-degenRed', 'text-black');
+                document.body.classList.add('shake'); // Constant slight shake
+                
+                // Play heartbeat rhythm (Thump-thump... pause)
+                degenInterval = setInterval(() => {
+                    playHeartbeat();
+                    setTimeout(playHeartbeat, 250); // Second thump
+                }, 1000); // 60 BPM of panic
+                
+            } else {
+                isDegenActive = false;
+                degenBtn.classList.replace('bg-degenRed', 'bg-black');
+                degenBtn.classList.replace('text-black', 'text-degenRed');
+                document.body.classList.remove('shake');
+                clearInterval(degenInterval);
+            }
+        });
     </script>
 </body>
 </html>
