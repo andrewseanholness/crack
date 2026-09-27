@@ -496,21 +496,77 @@
     </div>
 
     <script>
-        function copyCA() {
-            const copyText = document.getElementById("ca-input");
-            copyText.select();
-            copyText.setSelectionRange(0, 99999); 
-            document.execCommand("copy");
-            
-            const modal = document.createElement('div');
-            modal.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black border-4 border-degenGreen p-6 sm:p-8 z-50 text-center brutal-border w-11/12 max-w-md';
-            modal.innerHTML = `
-                <h2 class="text-3xl sm:text-4xl font-heavy text-degenGreen mb-4 uppercase break-words">CA COPIED!</h2>
-                <p class="font-bold text-lg sm:text-xl mb-6 break-words text-white">Now go paste it into PancakeSwap and max bid before the next candle prints!</p>
-                <button onclick="this.parentElement.remove()" class="bg-degenGreen text-black font-heavy text-xl px-6 py-2 border-2 border-black hover:bg-green-400 w-full">LFG 🚀</button>
-            `;
-            document.body.appendChild(modal);
+function copyCA() {
+    const copyText = document.getElementById("ca-input");
+
+    copyText.select();
+    copyText.setSelectionRange(0, 99999);
+    document.execCommand("copy");
+
+    // Create full-screen overlay
+    const overlay = document.createElement("div");
+
+    overlay.className =
+        "fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4";
+
+    // Create modal box
+    const modal = document.createElement("div");
+
+    modal.className =
+        "bg-black border-4 border-degenGreen p-6 sm:p-8 text-center brutal-border w-full max-w-md shadow-2xl";
+
+    modal.innerHTML = `
+        <h2 class="text-3xl sm:text-4xl font-heavy text-degenGreen mb-4 uppercase break-words">
+            CA COPIED!
+        </h2>
+
+        <p class="font-bold text-lg sm:text-xl mb-6 break-words text-white">
+            Now go paste it into PancakeSwap and max bid before the next candle prints!
+        </p>
+
+        <button
+            id="lfg-button"
+            type="button"
+            class="bg-degenGreen text-black font-heavy text-xl px-6 py-3 border-2 border-black hover:bg-green-400 transition-colors w-full cursor-pointer">
+            LFG 🚀
+        </button>
+    `;
+
+    // Add modal to overlay
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+
+    // Prevent page from scrolling while modal is open
+    document.body.style.overflow = "hidden";
+
+    // Close modal function
+    function closeModal() {
+        overlay.remove();
+        document.body.style.overflow = "";
+        document.removeEventListener("keydown", handleEscape);
+    }
+
+    // LFG button closes modal
+    const lfgButton = modal.querySelector("#lfg-button");
+
+    lfgButton.addEventListener("click", closeModal);
+
+    // Clicking outside the modal closes it
+    overlay.addEventListener("click", function (event) {
+        if (event.target === overlay) {
+            closeModal();
         }
+    });
+
+    // Escape key closes modal
+    function handleEscape(event) {
+        if (event.key === "Escape") {
+            closeModal();
+        }
+    }
+
+    document.addEventListener("keydown", handleEscape);
+}
 
         // Game Modal Logic
         const gameModal = document.getElementById('game-modal');
