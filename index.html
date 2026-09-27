@@ -60,7 +60,7 @@
             display: inline-block;
             padding-left: 100%;
             animation: marquee 12s linear infinite; /* Sped up for anxiety */
-            font-size: 2rem;
+            font-size: clamp(1.2rem, 4vw, 2rem);
             font-family: 'Archivo Black', sans-serif;
             text-transform: uppercase;
         }
@@ -95,17 +95,17 @@
     <nav class="p-4 sm:p-6 border-b-4 border-degenGreen flex flex-col md:flex-row justify-between items-center bg-black relative z-10 gap-4">
         <div class="text-4xl sm:text-5xl font-heavy tracking-tighter text-degenGreen">$CRACK</div>
         <div class="flex flex-wrap justify-center gap-2 sm:gap-6">
-            <a href="#about" class="font-bold text-lg sm:text-xl text-white hover:text-degenGreen transition-colors">THE HIGH</a>
-            <a href="#chart" class="font-bold text-lg sm:text-xl text-white hover:text-degenGreen transition-colors">CHART</a>
-            <a href="#tokenomics" class="font-bold text-lg sm:text-xl text-white hover:text-degenGreen transition-colors">THE BAG</a>
-            <a href="#meme-lab" class="font-bold text-lg sm:text-xl text-white hover:text-degenGreen transition-colors">MEME LAB</a>
-            <a href="#how-to-buy" class="font-bold text-lg sm:text-xl text-white hover:text-degenGreen transition-colors">GET YOUR FIX</a>
+            <a href="#about" class="font-bold text-sm sm:text-lg text-white hover:text-degenGreen transition-colors">THE HIGH</a>
+            <a href="#chart" class="font-bold text-sm sm:text-lg text-white hover:text-degenGreen transition-colors">CHART</a>
+            <a href="#tokenomics" class="font-bold text-sm sm:text-lg text-white hover:text-degenGreen transition-colors">THE BAG</a>
+            <a href="#meme-lab" class="font-bold text-sm sm:text-lg text-white hover:text-degenGreen transition-colors">MEME LAB</a>
+            <a href="#how-to-buy" class="font-bold text-sm sm:text-lg text-white hover:text-degenGreen transition-colors">GET YOUR FIX</a>
         </div>
-        <div class="flex gap-4">
-            <button id="degen-mode-btn" class="bg-black text-degenRed brutal-border border-degenRed font-heavy text-lg px-4 py-2 hover:bg-degenRed hover:text-black transition-colors shadow-none uppercase flex items-center gap-2">
+        <div class="flex flex-wrap justify-center gap-2 sm:gap-4 w-full md:w-auto">
+            <button id="degen-mode-btn" class="flex-1 md:flex-none justify-center bg-black text-degenRed brutal-border border-degenRed font-heavy text-sm sm:text-lg px-4 py-2 hover:bg-degenRed hover:text-black transition-colors shadow-none uppercase flex items-center gap-2">
                 <span class="animate-pulse">⚠️</span> Degen Mode
             </button>
-            <button class="bg-degenGreen text-black brutal-border border-degenGreen font-heavy text-xl sm:text-2xl px-6 py-2 shake shadow-none">APE IN NOW</button>
+            <button class="flex-1 md:flex-none justify-center bg-degenGreen text-black brutal-border border-degenGreen font-heavy text-sm sm:text-xl px-4 sm:px-6 py-2 shake shadow-none">APE IN NOW</button>
         </div>
     </nav>
 
@@ -460,9 +460,9 @@
 
         <section class="py-20 sm:py-32 px-4 bg-degenDark text-center">
             <h2 class="text-3xl sm:text-5xl font-heavy mb-8 uppercase break-words text-white">Get Your Fix</h2>
-            <div class="max-w-3xl mx-auto flex flex-col sm:flex-row items-center border-4 border-degenGreen brutal-border bg-black p-2 w-full">
-                <input type="text" id="ca-input" value="0x7aB03e7f19eC97c255D1aFAc61e24bD068c37272" readonly class="w-full bg-transparent font-bold text-lg sm:text-xl md:text-2xl p-4 outline-none text-center sm:text-left text-degenGreen selection:bg-white selection:text-black min-w-0">
-                <button onclick="copyCA()" class="w-full sm:w-auto bg-degenGreen text-black font-heavy text-xl px-8 py-4 border-4 border-black hover:bg-green-400 whitespace-nowrap active:scale-95 transition-transform mt-2 sm:mt-0">
+            <div class="max-w-3xl mx-auto flex flex-col sm:flex-row items-center border-4 border-degenGreen brutal-border bg-black p-2 w-full gap-2 sm:gap-0 overflow-hidden">
+                <input type="text" id="ca-input" value="0x7aB03e7f19eC97c255D1aFAc61e24bD068c37272" readonly class="w-full bg-transparent font-bold text-[11px] min-[375px]:text-xs sm:text-base md:text-xl p-2 sm:p-4 outline-none text-center sm:text-left text-degenGreen selection:bg-white selection:text-black min-w-0 truncate">
+                <button onclick="copyCA()" class="w-full sm:w-auto bg-degenGreen text-black font-heavy text-lg sm:text-xl px-4 sm:px-8 py-3 sm:py-4 border-4 border-black hover:bg-green-400 whitespace-nowrap active:scale-95 transition-transform shrink-0">
                     COPY CA
                 </button>
             </div>
