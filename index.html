@@ -18,7 +18,8 @@
                     colors: {
                         degenGreen: '#39FF14', // Neon chart green from the images
                         degenDark: '#0A0F11',  // Deep moody background
-                        rockWhite: '#F3F4F6'
+                        rockWhite: '#F3F4F6',
+                        degenRed: '#FF003C'    // Added missing red color for Degen Mode
                     }
                 }
             }
@@ -130,13 +131,16 @@
                     <span class="text-degenGreen font-heavy block mt-4">WE BOTTLED THAT PURE DEGEN FOMO.</span>
                 </p>
 
-                <div class="flex flex-col sm:flex-row gap-6 w-full max-w-2xl justify-center px-4">
-                    <button class="flex-1 bg-degenGreen text-black brutal-border border-degenGreen font-heavy text-2xl sm:text-3xl py-4 sm:py-6 shake shadow-none">
+                <div class="flex flex-col sm:flex-row gap-4 w-full max-w-4xl justify-center px-4">
+                    <a href="https://pancakeswap.finance/swap?outputCurrency=0x7aB03e7f19eC97c255D1aFAc61e24bD068c37272" target="_blank" class="flex-1 bg-degenGreen text-black brutal-border border-degenGreen font-heavy text-xl sm:text-2xl py-4 shake shadow-none flex justify-center items-center">
                         BUY $CRACK
-                    </button>
-                    <button class="flex-1 bg-black text-white brutal-border-white font-heavy text-2xl sm:text-3xl py-4 sm:py-6 hover:bg-gray-900 tilt-left">
+                    </a>
+                    <a href="https://dexscreener.com/bsc/0x7aB03e7f19eC97c255D1aFAc61e24bD068c37272" target="_blank" class="flex-1 bg-black text-white brutal-border-white font-heavy text-xl sm:text-2xl py-4 hover:bg-gray-900 tilt-left flex justify-center items-center">
                         DEXSCREENER
-                    </button>
+                    </a>
+                    <a href="https://bscscan.com/token/0x7ab03e7f19ec97c255d1afac61e24bd068c37272" target="_blank" class="flex-1 bg-degenDark text-white brutal-border border-degenGreen font-heavy text-xl sm:text-2xl py-4 hover:bg-degenGreen hover:text-black tilt-right flex justify-center items-center transition-colors">
+                        BSCSCAN
+                    </a>
                 </div>
 
                 <div class="w-full max-w-4xl mt-16 border-4 border-degenGreen brutal-border relative min-h-[300px] sm:min-h-[500px] flex items-center justify-center tilt-right z-10 overflow-hidden bg-black p-0">
@@ -158,22 +162,18 @@
                     <div class="flex gap-4">
                         <div class="bg-degenDark border-2 border-degenGreen p-4 brutal-border">
                             <div class="text-gray-400 font-bold uppercase text-sm mb-1">MARKET CAP</div>
-                            <div class="text-degenGreen font-heavy text-2xl sm:text-3xl animate-pulse">TBA</div>
+                            <div id="live-mcap" class="text-degenGreen font-heavy text-2xl sm:text-3xl animate-pulse">TBA</div>
                         </div>
                         <div class="bg-degenDark border-2 border-white p-4 brutal-border-white tilt-right">
                             <div class="text-gray-400 font-bold uppercase text-sm mb-1">24H VOL</div>
-                            <div class="text-white font-heavy text-2xl sm:text-3xl">TBA</div>
+                            <div id="live-vol" class="text-white font-heavy text-2xl sm:text-3xl animate-pulse">TBA</div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- DEXSCREENER PLACEHOLDER -->
-                <div class="w-full h-[500px] sm:h-[700px] bg-degenDark border-4 border-degenGreen brutal-border p-2 sm:p-4 flex flex-col items-center justify-center text-center relative z-10">
-                    <div class="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjMDAwIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiMzOUZGMTQiPjwvcmVjdD4KPC9zdmc+')] pointer-events-none"></div>
-                    <span class="text-7xl mb-4">📈</span>
-                    <h3 class="text-3xl sm:text-4xl font-heavy text-white mb-2 uppercase text-stroke">Chart Loading...</h3>
-                    <p class="text-degenGreen font-bold text-lg max-w-md">DexScreener embed will be placed here immediately after launch.</p>
-                    <p class="text-gray-500 font-bold mt-4 uppercase text-sm">(Insert iframe here)</p>
+                <!-- LIVE DEXSCREENER EMBED -->
+                <div id="dexscreener-embed" class="relative w-full h-[500px] sm:h-[700px] border-4 border-degenGreen brutal-border z-10 bg-black">
+                    <iframe src="https://dexscreener.com/bsc/0x7aB03e7f19eC97c255D1aFAc61e24bD068c37272?embed=1&theme=dark&trades=0&info=0" class="w-full h-full absolute inset-0" frameborder="0"></iframe>
                 </div>
             </div>
         </section>
@@ -461,7 +461,7 @@
         <section class="py-20 sm:py-32 px-4 bg-degenDark text-center">
             <h2 class="text-3xl sm:text-5xl font-heavy mb-8 uppercase break-words text-white">Get Your Fix</h2>
             <div class="max-w-3xl mx-auto flex flex-col sm:flex-row items-center border-4 border-degenGreen brutal-border bg-black p-2 w-full">
-                <input type="text" id="ca-input" value="0xCRACK...6942069" readonly class="w-full bg-transparent font-bold text-lg sm:text-xl md:text-2xl p-4 outline-none text-center sm:text-left text-degenGreen selection:bg-white selection:text-black min-w-0">
+                <input type="text" id="ca-input" value="0x7aB03e7f19eC97c255D1aFAc61e24bD068c37272" readonly class="w-full bg-transparent font-bold text-lg sm:text-xl md:text-2xl p-4 outline-none text-center sm:text-left text-degenGreen selection:bg-white selection:text-black min-w-0">
                 <button onclick="copyCA()" class="w-full sm:w-auto bg-degenGreen text-black font-heavy text-xl px-8 py-4 border-4 border-black hover:bg-green-400 whitespace-nowrap active:scale-95 transition-transform mt-2 sm:mt-0">
                     COPY CA
                 </button>
@@ -648,6 +648,38 @@
             osc.start(now);
             osc.stop(now + 0.2);
         }
+
+        async function fetchLiveStats() {
+            try {
+                // DexScreener API call using your specific Contract Address
+                const response = await fetch('https://api.dexscreener.com/latest/dex/tokens/0x7aB03e7f19eC97c255D1aFAc61e24bD068c37272');
+                const data = await response.json();
+                
+                if (data.pairs && data.pairs.length > 0) {
+                    // Grab the primary PancakeSwap pair
+                    const pair = data.pairs[0];
+                    const mcap = pair.fdv || pair.marketCap;
+                    const vol = pair.volume.h24;
+                    
+                    if (mcap) {
+                        const mcapEl = document.getElementById('live-mcap');
+                        mcapEl.innerText = '$' + mcap.toLocaleString(undefined, {maximumFractionDigits: 0});
+                        mcapEl.classList.remove('animate-pulse');
+                    }
+                    if (vol) {
+                        const volEl = document.getElementById('live-vol');
+                        volEl.innerText = '$' + vol.toLocaleString(undefined, {maximumFractionDigits: 0});
+                        volEl.classList.remove('animate-pulse');
+                    }
+                }
+            } catch (error) {
+                console.error("Waiting for token to go live on DexScreener...", error);
+            }
+        }
+        
+        // Fetch immediately, then update every 30 seconds
+        fetchLiveStats();
+        setInterval(fetchLiveStats, 30000);
 
         degenBtn.addEventListener('click', () => {
             if (!isDegenActive) {
